@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Jaringan Komputer - 50 Soal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            background-color: #f8f9fa;
+        }
+        .question-number {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .option {
+            margin-bottom: 8px;
+        }
+        .explanation {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            display: none;
+        }
+        .show-explanation {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .show-explanation:hover {
+            background-color: #2980b9;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            background-color: #27ae60;
+        }
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+        .score {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .correct {
+            color: #27ae60;
+        }
+        .incorrect {
+            color: #e74c3c;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .nav-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .nav-btn:hover {
+            background-color: #2980b9;
+        }
+        .nav-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kuis Jaringan Komputer - 50 Soal</h1>
+        
+        <form id="quiz-form">
+            <!-- Soal 1-10 sudah ada di kode sebelumnya -->
+            <!-- Soal 11 -->
+            <div class="question">
+                <div class="question-number">11. Apa fungsi utama dari router dalam jaringan?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q11" value="a"> a. Menghubungkan jaringan berbeda dan menentukan jalur terbaik</div>
+                    <div class="option"><input type="radio" name="q11" value="b"> b. Menghubungkan perangkat dalam jaringan lokal saja</div>
+                    <div class="option"><input type="radio" name="q11" value="c"> c. Menyimpan data sementara</div>
+                    <div class="option"><input type="radio" name="q11" value="d"> d. Memperkuat sinyal kabel</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation11')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation11">
+                    <strong>Jawaban: a. Menghubungkan jaringan berbeda dan menentukan jalur terbaik</strong><br>
+                    Penjelasan: Router menghubungkan beberapa jaringan serta menentukan jalur terbaik agar paket sampai ke tujuan.
+                </div>
+            </div>
+            
+            <!-- Soal 12 -->
+            <div class="question">
+                <div class="question-number">12. Apa jenis topologi jaringan yang semua perangkat terhubung ke satu titik pusat?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q12" value="a"> a. Bus</div>
+                    <div class="option"><input type="radio" name="q12" value="b"> b. Star</div>
+                    <div class="option"><input type="radio" name="q12" value="c"> c. Ring</div>
+                    <div class="option"><input type="radio" name="q12" value="d"> d. Mesh</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation12')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation12">
+                    <strong>Jawaban: b. Star</strong><br>
+                    Penjelasan: Dalam topologi star, semua perangkat terhubung ke perangkat pusat seperti switch atau hub.
+                </div>
+            </div>
+            
+            <!-- Soal 13 -->
+            <div class="question">
+                <div class="question-number">13. Apa kelemahan utama topologi bus?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q13" value="a"> a. Mahal biaya instalasi</div>
+                    <div class="option"><input type="radio" name="q13" value="b"> b. Jika satu perangkat rusak, seluruh jaringan bermasalah</div>
+                    <div class="option"><input type="radio" name="q13" value="c"> c. Sulit menambah perangkat baru</div>
+                    <div class="option"><input type="radio" name="q13" value="d"> d. Menggunakan banyak kabel</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation13')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation13">
+                    <strong>Jawaban: b. Jika satu perangkat rusak, seluruh jaringan bermasalah</strong><br>
+                    Penjelasan: Pada topologi bus, gangguan kabel utama menyebabkan seluruh jaringan tidak berfungsi.
+                </div>
+            </div>
+            
+            <!-- Soal 14 -->
+            <div class="question">
+                <div class="question-number">14. Pada model TCP/IP, layer apa yang bertanggung jawab untuk pengepakan data menjadi paket?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q14" value="a"> a. Application</div>
+                    <div class="option"><input type="radio" name="q14" value="b"> b. Transport</div>
+                    <div class="option"><input type="radio" name="q14" value="c"> c. Internet</div>
+                    <div class="option"><input type="radio" name="q14" value="d"> d. Network Access</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation14')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation14">
+                    <strong>Jawaban: b. Transport</strong><br>
+                    Penjelasan: Layer transport menangani segmentasi data dan pembentukan segmen untuk pengiriman.
+                </div>
+            </div>
+            
+            <!-- Soal 15 -->
+            <div class="question">
+                <div class="question-number">15. Apa singkatan LAN?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q15" value="a"> a. Large Area Network</div>
+                    <div class="option"><input type="radio" name="q15" value="b"> b. Local Area Network</div>
+                    <div class="option"><input type="radio" name="q15" value="c"> c. Long Area Network</div>
+                    <div class="option"><input type="radio" name="q15" value="d"> d. Local Access Network</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation15')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation15">
+                    <strong>Jawaban: b. Local Area Network</strong><br>
+                    Penjelasan: LAN adalah jaringan yang mencakup area fisik terbatas seperti rumah atau kantor.
+                </div>
+            </div>
+            
+            <!-- Soal 16 -->
+            <div class="question">
+                <div class="question-number">16. Apa fungsi utama dari switch dalam jaringan?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q16" value="a"> a. Menghubungkan jaringan berbeda</div>
+                    <div class="option"><input type="radio" name="q16" value="b"> b. Merutekan paket ke alamat MAC yang tepat</div>
+                    <div class="option"><input type="radio" name="q16" value="c"> c. Memperkuat sinyal jaringan</div>
+                    <div class="option"><input type="radio" name="q16" value="d"> d. Membagi jaringan menjadi segmen yang lebih kecil</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation16')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation16">
+                    <strong>Jawaban: b. Merutekan paket ke alamat MAC yang tepat</strong><br>
+                    Penjelasan: Switch bekerja di layer data link dengan memfilter dan meneruskan frame ke perangkat tujuan sesuai alamat MAC.
+                </div>
+            </div>
+            
+            <!-- Soal 17 -->
+            <div class="question">
+                <div class="question-number">17. Apa yang dimaksud dengan bandwidth dalam jaringan komputer?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q17" value="a"> a. Jumlah perangkat dalam jaringan</div>
+                    <div class="option"><input type="radio" name="q17" value="b"> b. Jumlah data maksimum yang dapat dikirim dalam satu waktu</div>
+                    <div class="option"><input type="radio" name="q17" value="c"> c. Kecepatan jaringan secara keseluruhan</div>
+                    <div class="option"><input type="radio" name="q17" value="d"> d. Jenis kabel yang dipakai</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation17')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation17">
+                    <strong>Jawaban: b. Jumlah data maksimum yang dapat dikirim dalam satu waktu</strong><br>
+                    Penjelasan: Bandwidth merujuk pada kapasitas maksimum transmisi data melalui media jaringan.
+                </div>
+            </div>
+            
+            <!-- Soal 18 -->
+            <div class="question">
+                <div class="question-number">18. Manakah media transmisi yang menggunakan gelombang cahaya untuk mengirim data?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q18" value="a"> a. Kabel tembaga</div>
+                    <div class="option"><input type="radio" name="q18" value="b"> b. Fiber Optik</div>
+                    <div class="option"><input type="radio" name="q18" value="c"> c. Gelombang radio</div>
+                    <div class="option"><input type="radio" name="q18" value="d"> d. Ethernet</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation18')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation18">
+                    <strong>Jawaban: b. Fiber Optik</strong><br>
+                    Penjelasan: Fiber optik menggunakan pulsa cahaya untuk mengirimkan data dengan kecepatan tinggi dan jarak jauh.
+                </div>
+            </div>
+            
+            <!-- Soal 19 -->
+            <div class="question">
+                <div class="question-number">19. Apa fungsi dari protokol ICMP?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q19" value="a"> a. Mengirim email</div>
+                    <div class="option"><input type="radio" name="q19" value="b"> b. Mengirim pesan error dan status jaringan</div>
+                    <div class="option"><input type="radio" name="q19" value="c"> c. Memindahkan file antar komputer</div>
+                    <div class="option"><input type="radio" name="q19" value="d"> d. Mempercepat pengiriman data</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation19')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation19">
+                    <strong>Jawaban: b. Mengirim pesan error dan status jaringan</strong><br>
+                    Penjelasan: ICMP digunakan untuk mengirim pesan kontrol dan kesalahan jaringan antar host dan router.
+                </div>
+            </div>
+            
+            <!-- Soal 20 -->
+            <div class="question">
+                <div class="question-number">20. Fungsi DHCP di jaringan adalah...</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q20" value="a"> a. Memberikan alamat IP otomatis ke perangkat</div>
+                    <div class="option"><input type="radio" name="q20" value="b"> b. Mengatur rute paket data</div>
+                    <div class="option"><input type="radio" name="q20" value="c"> c. Melindungi jaringan dari serangan</div>
+                    <div class="option"><input type="radio" name="q20" value="d"> d. Mengubah data menjadi sinyal</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation20')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation20">
+                    <strong>Jawaban: a. Memberikan alamat IP otomatis ke perangkat</strong><br>
+                    Penjelasan: DHCP berfungsi untuk secara otomatis memberikan alamat IP dan konfigurasi jaringan ke perangkat baru.
+                </div>
+            </div>
+            
+            <!-- Soal 21 -->
+            <div class="question">
+                <div class="question-number">21. Apa yang dimaksud dengan protokol HTTP?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q21" value="a"> a. Protokol pengiriman email</div>
+                    <div class="option"><input type="radio" name="q21" value="b"> b. Protokol untuk mengakses halaman web</div>
+                    <div class="option"><input type="radio" name="q21" value="c"> c. Protokol pengiriman file</div>
+                    <div class="option"><input type="radio" name="q21" value="d"> d. Protokol pengelolaan alamat IP</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation21')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation21">
+                    <strong>Jawaban: b. Protokol untuk mengakses halaman web</strong><br>
+                    Penjelasan: HTTP adalah protokol standar untuk mentransfer dokumen web dari server ke browser.
+                </div>
+            </div>
+            
+            <!-- Soal 22 -->
+            <div class="question">
+                <div class="question-number">22. Apa fungsi utama DNS dalam jaringan?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q22" value="a"> a. Mengatur alamat IP perangkat</div>
+                    <div class="option"><input type="radio" name="q22" value="b"> b. Menerjemahkan nama domain ke alamat IP</div>
+                    <div class="option"><input type="radio" name="q22" value="c"> c. Mengelola protokol TCP dan UDP</div>
+                    <div class="option"><input type="radio" name="q22" value="d"> d. Mengirim data secara aman</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation22')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation22">
+                    <strong>Jawaban: b. Menerjemahkan nama domain ke alamat IP</strong><br>
+                    Penjelasan: DNS berfungsi mengubah nama yang mudah diingat menjadi alamat IP yang digunakan perangkat jaringan.
+                </div>
+            </div>
+            
+            <!-- Soal 23 -->
+            <div class="question">
+                <div class="question-number">23. Perangkat manakah yang digunakan untuk menghubungkan jaringan lokal ke jaringan luas (WAN)?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q23" value="a"> a. Hub</div>
+                    <div class="option"><input type="radio" name="q23" value="b"> b. Switch</div>
+                    <div class="option"><input type="radio" name="q23" value="c"> c. Router</div>
+                    <div class="option"><input type="radio" name="q23" value="d"> d. Access Point</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation23')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation23">
+                    <strong>Jawaban: c. Router</strong><br>
+                    Penjelasan: Router memfasilitasi koneksi antara jaringan lokal dengan jaringan lain yang lebih luas.
+                </div>
+            </div>
+            
+            <!-- Soal 24 -->
+            <div class="question">
+                <div class="question-number">24. Apa yang dimaksud dengan protokol TCP?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q24" value="a"> a. Protokol pengiriman data tanpa koneksi</div>
+                    <div class="option"><input type="radio" name="q24" value="b"> b. Protokol komunikasi yang andal dan berorientasi koneksi</div>
+                    <div class="option"><input type="radio" name="q24" value="c"> c. Protokol pengiriman suara saja</div>
+                    <div class="option"><input type="radio" name="q24" value="d"> d. Protokol pengaturan alamat IP</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation24')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation24">
+                    <strong>Jawaban: b. Protokol komunikasi yang andal dan berorientasi koneksi</strong><br>
+                    Penjelasan: TCP menyediakan layanan transfer data dengan pengecekan kesalahan dan urutan data yang tepat.
+                </div>
+            </div>
+            
+            <!-- Soal 25 -->
+            <div class="question">
+                <div class="question-number">25. Jenis kabel yang paling umum digunakan di jaringan LAN adalah...</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q25" value="a"> a. Kabel Coaxial</div>
+                    <div class="option"><input type="radio" name="q25" value="b"> b. Kabel UTP</div>
+                    <div class="option"><input type="radio" name="q25" value="c"> c. Kabel Fiber Optik</div>
+                    <div class="option"><input type="radio" name="q25" value="d"> d. Kabel HDMI</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation25')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation25">
+                    <strong>Jawaban: b. Kabel UTP</strong><br>
+                    Penjelasan: Kabel UTP (Unshielded Twisted Pair) sangat umum digunakan karena biaya dan kemudahan instalasi.
+                </div>
+            </div>
+            
+            <!-- Soal 26 -->
+            <div class="question">
+                <div class="question-number">26. Apa fungsi subnetting dalam jaringan IP?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q26" value="a"> a. Menggabungkan beberapa jaringan menjadi satu</div>
+                    <div class="option"><input type="radio" name="q26" value="b"> b. Membagi jaringan IP menjadi beberapa subnet lebih kecil</div>
+                    <div class="option"><input type="radio" name="q26" value="c"> c. Menghubungkan satu komputer dengan internet</div>
+                    <div class="option"><input type="radio" name="q26" value="d"> d. Mengganti alamat IP secara otomatis</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation26')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation26">
+                    <strong>Jawaban: b. Membagi jaringan IP menjadi beberapa subnet lebih kecil</strong><br>
+                    Penjelasan: Subnetting membantu mengatur jaringan untuk meningkatkan efisiensi dan keamanan.
+                </div>
+            </div>
+            
+            <!-- Soal 27 -->
+            <div class="question">
+                <div class="question-number">27. Protokol mana yang menggunakan nomor port 80?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q27" value="a"> a. FTP</div>
+                    <div class="option"><input type="radio" name="q27" value="b"> b. HTTP</div>
+                    <div class="option"><input type="radio" name="q27" value="c"> c. SMTP</div>
+                    <div class="option"><input type="radio" name="q27" value="d"> d. DNS</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation27')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation27">
+                    <strong>Jawaban: b. HTTP</strong><br>
+                    Penjelasan: Port 80 adalah port standar untuk protokol HTTP pada web browsing.
+                </div>
+            </div>
+            
+            <!-- Soal 28 -->
+            <div class="question">
+                <div class="question-number">28. Apa itu VPN?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q28" value="a"> a. Virtual Public Network</div>
+                    <div class="option"><input type="radio" name="q28" value="b"> b. Virtual Private Network</div>
+                    <div class="option"><input type="radio" name="q28" value="c"> c. Virtual Public Node</div>
+                    <div class="option"><input type="radio" name="q28" value="d"> d. Virtual Private Node</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation28')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation28">
+                    <strong>Jawaban: b. Virtual Private Network</strong><br>
+                    Penjelasan: VPN adalah jaringan privat yang menggunakan jaringan publik untuk menghubungkan perangkat secara aman.
+                </div>
+            </div>
+            
+            <!-- Soal 29 -->
+            <div class="question">
+                <div class="question-number">29. Apa yang dimaksud latency dalam jaringan?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q29" value="a"> a. Kapasitas transmisi data</div>
+                    <div class="option"><input type="radio" name="q29" value="b"> b. Waktu delay saat data dikirimkan dari sumber ke tujuan</div>
+                    <div class="option"><input type="radio" name="q29" value="c"> c. Jumlah data yang dikirim dalam satu detik</div>
+                    <div class="option"><input type="radio" name="q29" value="d"> d. Kecepatan pengkodean data</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation29')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation29">
+                    <strong>Jawaban: b. Waktu delay saat data dikirimkan dari sumber ke tujuan</strong><br>
+                    Penjelasan: Latency adalah waktu yang diperlukan sinyal untuk berpindah dari sumber ke tujuan.
+                </div>
+            </div>
+            
+            <!-- Soal 30 -->
+            <div class="question">
+                <div class="question-number">30. Peran firewall dalam jaringan adalah?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q30" value="a"> a. Mengoptimalkan kecepatan jaringan</div>
+                    <div class="option"><input type="radio" name="q30" value="b"> b. Mengontrol dan melindungi akses ke jaringan</div>
+                    <div class="option"><input type="radio" name="q30" value="c"> c. Menyimpan data sementara</div>
+                    <div class="option"><input type="radio" name="q30" value="d"> d. Menghubungkan jaringan berbeda</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation30')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation30">
+                    <strong>Jawaban: b. Mengontrol dan melindungi akses ke jaringan</strong><br>
+                    Penjelasan: Firewall adalah sistem keamanan yang mengatur lalu lintas data untuk mencegah akses tidak sah.
+                </div>
+            </div>
+            
+            <!-- Soal 31 -->
+            <div class="question">
+                <div class="question-number">31. Apa bedanya protokol TCP dan UDP?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q31" value="a"> a. TCP lebih cepat dari UDP</div>
+                    <div class="option"><input type="radio" name="q31" value="b"> b. UDP tidak menjamin pengiriman data yang andal, TCP menjamin</div>
+                    <div class="option"><input type="radio" name="q31" value="c"> c. TCP hanya untuk email, UDP untuk web</div>
+                    <div class="option"><input type="radio" name="q31" value="d"> d. TCP versi lama, UDP versi baru</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation31')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation31">
+                    <strong>Jawaban: b. UDP tidak menjamin pengiriman data yang andal, TCP menjamin</strong><br>
+                    Penjelasan: TCP menggunakan koneksi berorientasi dan pemeriksaan error, sedangkan UDP lebih ringan tapi tidak menjamin pengiriman.
+                </div>
+            </div>
+            
+            <!-- Soal 32 -->
+            <div class="question">
+                <div class="question-number">32. Apa contoh perangkat jaringan yang bekerja di layer 2 OSI?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q32" value="a"> a. Router</div>
+                    <div class="option"><input type="radio" name="q32" value="b"> b. Switch</div>
+                    <div class="option"><input type="radio" name="q32" value="c"> c. Hub</div>
+                    <div class="option"><input type="radio" name="q32" value="d"> d. Firewall</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation32')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation32">
+                    <strong>Jawaban: b. Switch</strong><br>
+                    Penjelasan: Switch beroperasi di layer 2 (Data Link) OSI untuk meneruskan frame berdasarkan MAC address.
+                </div>
+            </div>
+            
+            <!-- Soal 33 -->
+            <div class="question">
+                <div class="question-number">33. Apa tujuan utama dari protokol ARP?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q33" value="a"> a. Mengubah IP menjadi MAC address</div>
+                    <div class="option"><input type="radio" name="q33" value="b"> b. Mengirim email</div>
+                    <div class="option"><input type="radio" name="q33" value="c"> c. Menghubungkan router dengan switch</div>
+                    <div class="option"><input type="radio" name="q33" value="d"> d. Mengatur alamat IP</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation33')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation33">
+                    <strong>Jawaban: a. Mengubah IP menjadi MAC address</strong><br>
+                    Penjelasan: ARP (Address Resolution Protocol) menerjemahkan alamat IP ke alamat fisik MAC.
+                </div>
+            </div>
+            
+            <!-- Soal 34 -->
+            <div class="question">
+                <div class="question-number">34. Apa yang dimaksud dengan bandwidth delay product?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q34" value="a"> a. Produk dari kecepatan dan delay jaringan</div>
+                    <div class="option"><input type="radio" name="q34" value="b"> b. Alat untuk meningkatkan bandwidth</div>
+                    <div class="option"><input type="radio" name="q34" value="c"> c. Jumlah data yang bisa dikirim tanpa error</div>
+                    <div class="option"><input type="radio" name="q34" value="d"> d. Ukuran buffer router</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation34')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation34">
+                    <strong>Jawaban: a. Produk dari kecepatan dan delay jaringan</strong><br>
+                    Penjelasan: Ini menunjukkan jumlah data dalam transit yang jaringan dapat tangani sesuai kapasitas dan delay.
+                </div>
+            </div>
+            
+            <!-- Soal 35 -->
+            <div class="question">
+                <div class="question-number">35. Apa yang dimaksud dengan jitter dalam jaringan?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q35" value="a"> a. Variasi delay antar paket data</div>
+                    <div class="option"><input type="radio" name="q35" value="b"> b. Jumlah paket yang hilang</div>
+                    <div class="option"><input type="radio" name="q35" value="c"> c. Kesalahan pengiriman data</div>
+                    <div class="option"><input type="radio" name="q35" value="d"> d. Kapasitas jaringan</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation35')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation35">
+                    <strong>Jawaban: a. Variasi delay antar paket data</strong><br>
+                    Penjelasan: Jitter adalah variasi waktu keterlambatan pengiriman paket yang bisa mempengaruhi kualitas real-time.
+                </div>
+            </div>
+            
+            <!-- Soal 36 -->
+            <div class="question">
+                <div class="question-number">36. Apa fungsi NAT dalam jaringan?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q36" value="a"> a. Mengubah alamat IP lokal menjadi alamat IP publik</div>
+                    <div class="option"><input type="radio" name="q36" value="b"> b. Menghubungkan perangkat ke internet</div>
+                    <div class="option"><input type="radio" name="q36" value="c"> c. Menyimpan data jaringan</div>
+                    <div class="option"><input type="radio" name="q36" value="d"> d. Memblokir virus</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation36')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation36">
+                    <strong>Jawaban: a. Mengubah alamat IP lokal menjadi alamat IP publik</strong><br>
+                    Penjelasan: NAT (Network Address Translation) memungkinkan banyak perangkat menggunakan satu alamat IP publik.
+                </div>
+            </div>
+            
+            <!-- Soal 37 -->
+            <div class="question">
+                <div class="question-number">37. Apa jenis media yang paling tahan terhadap interferensi elektromagnetik?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q37" value="a"> a. Kabel coaxial</div>
+                    <div class="option"><input type="radio" name="q37" value="b"> b. Kabel Fiber Optik</div>
+                    <div class="option"><input type="radio" name="q37" value="c"> c. Kabel UTP</div>
+                    <div class="option"><input type="radio" name="q37" value="d"> d. Gelombang radio</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation37')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation37">
+                    <strong>Jawaban: b. Kabel Fiber Optik</strong><br>
+                    Penjelasan: Fiber optik menggunakan cahaya sehingga tidak terpengaruh oleh interferensi elektromagnetik.
+                </div>
+            </div>
+            
+            <!-- Soal 38 -->
+            <div class="question">
+                <div class="question-number">38. Apa yang disebut dengan protokol SMTP?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q38" value="a"> a. Protokol transfer file</div>
+                    <div class="option"><input type="radio" name="q38" value="b"> b. Protokol pengiriman email</div>
+                    <div class="option"><input type="radio" name="q38" value="c"> c. Protokol pengambilan email</div>
+                    <div class="option"><input type="radio" name="q38" value="d"> d. Protokol browsing web</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation38')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation38">
+                    <strong>Jawaban: b. Protokol pengiriman email</strong><br>
+                    Penjelasan: SMTP (Simple Mail Transfer Protocol) digunakan untuk mengirim email antar server.
+                </div>
+            </div>
+            
+            <!-- Soal 39 -->
+            <div class="question">
+                <div class="question-number">39. Apa fungsi switch dalam jaringan?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q39" value="a"> a. Memperluas sinyal jaringan</div>
+                    <div class="option"><input type="radio" name="q39" value="b"> b. Meneruskan data ke perangkat berdasarkan alamat MAC</div>
+                    <div class="option"><input type="radio" name="q39" value="c"> c. Menghubungkan jaringan berbeda</div>
+                    <div class="option"><input type="radio" name="q39" value="d"> d. Menyimpan data sementara</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation39')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation39">
+                    <strong>Jawaban: b. Meneruskan data ke perangkat berdasarkan alamat MAC</strong><br>
+                    Penjelasan: Switch membaca frame dan meneruskannya hanya ke perangkat yang sesuai berdasarkan MAC address.
+                </div>
+            </div>
+            
+            <!-- Soal 40 -->
+            <div class="question">
+                <div class="question-number">40. Apa nama protokol yang digunakan untuk mengambil email dari server?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q40" value="a"> a. SMTP</div>
+                    <div class="option"><input type="radio" name="q40" value="b"> b. POP3</div>
+                    <div class="option"><input type="radio" name="q40" value="c"> c. FTP</div>
+                    <div class="option"><input type="radio" name="q40" value="d"> d. HTTP</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation40')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation40">
+                    <strong>Jawaban: b. POP3</strong><br>
+                    Penjelasan: POP3 (Post Office Protocol version 3) digunakan untuk mengunduh email dari server ke klien.
+                </div>
+            </div>
+            
+            <!-- Soal 41 -->
+            <div class="question">
+                <div class="question-number">41. Apa manfaat utama VLAN dalam jaringan?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q41" value="a"> a. Menghubungkan jaringan secara fisik</div>
+                    <div class="option"><input type="radio" name="q41" value="b"> b. Membagi jaringan menjadi segmen logis yang terpisah</div>
+                    <div class="option"><input type="radio" name="q41" value="c"> c. Menyederhanakan alamat IP</div>
+                    <div class="option"><input type="radio" name="q41" value="d"> d. Meningkatkan kecepatan kabel</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation41')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation41">
+                    <strong>Jawaban: b. Membagi jaringan menjadi segmen logis yang terpisah</strong><br>
+                    Penjelasan: VLAN memungkinkan pemisahan lalu lintas jaringan secara logis tanpa memandang lokasi fisik.
+                </div>
+            </div>
+            
+            <!-- Soal 42 -->
+            <div class="question">
+                <div class="question-number">42. Apa nama protokol yang digunakan untuk resolusi nama host menjadi alamat IP?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q42" value="a"> a. DHCP</div>
+                    <div class="option"><input type="radio" name="q42" value="b"> b. DNS</div>
+                    <div class="option"><input type="radio" name="q42" value="c"> c. ARP</div>
+                    <div class="option"><input type="radio" name="q42" value="d"> d. ICMP</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation42')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation42">
+                    <strong>Jawaban: b. DNS</strong><br>
+                    Penjelasan: DNS menerjemahkan nama domain yang mudah diingat oleh manusia menjadi alamat IP komputer.
+                </div>
+            </div>
+            
+            <!-- Soal 43 -->
+            <div class="question">
+                <div class="question-number">43. Apa yang dilakukan oleh perangkat modem dalam jaringan?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q43" value="a"> a. Menghubungkan jaringan lokal ke internet</div>
+                    <div class="option"><input type="radio" name="q43" value="b"> b. Mengubah sinyal digital ke sinyal analog dan sebaliknya</div>
+                    <div class="option"><input type="radio" name="q43" value="c"> c. Memperkuat sinyal kabel</div>
+                    <div class="option"><input type="radio" name="q43" value="d"> d. Mengatur alamat IP</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation43')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation43">
+                    <strong>Jawaban: b. Mengubah sinyal digital ke sinyal analog dan sebaliknya</strong><br>
+                    Penjelasan: Modem mengubah data digital komputer menjadi sinyal analog untuk transmisi melalui saluran telepon.
+                </div>
+            </div>
+            
+            <!-- Soal 44 -->
+            <div class="question">
+                <div class="question-number">44. Apa fungsi dari protokol FTP?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q44" value="a"> a. Mengirim email</div>
+                    <div class="option"><input type="radio" name="q44" value="b"> b. Transfer file antar komputer di jaringan</div>
+                    <div class="option"><input type="radio" name="q44" value="c"> c. Mengatur alamat IP</div>
+                    <div class="option"><input type="radio" name="q44" value="d"> d. Menyimpan data di server</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation44')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation44">
+                    <strong>Jawaban: b. Transfer file antar komputer di jaringan</strong><br>
+                    Penjelasan: FTP (File Transfer Protocol) memungkinkan transfer file di antara komputer melalui jaringan.
+                </div>
+            </div>
+            
+            <!-- Soal 45 -->
+            <div class="question">
+                <div class="question-number">45. Apa yang dimaksud dengan topologi mesh?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q45" value="a"> a. Semua perangkat terhubung langsung ke perangkat pusat</div>
+                    <div class="option"><input type="radio" name="q45" value="b"> b. Semua perangkat terhubung satu sama lain secara langsung</div>
+                    <div class="option"><input type="radio" name="q45" value="c"> c. Semua perangkat terhubung dalam satu kabel utama</div>
+                    <div class="option"><input type="radio" name="q45" value="d"> d. Semua perangkat terhubung secara acak</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation45')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation45">
+                    <strong>Jawaban: b. Semua perangkat terhubung satu sama lain secara langsung</strong><br>
+                    Penjelasan: Topologi mesh menyediakan koneksi point-to-point antar semua perangkat di jaringan.
+                </div>
+            </div>
+            
+            <!-- Soal 46 -->
+            <div class="question">
+                <div class="question-number">46. Apa tujuan dari protokol Telnet?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q46" value="a"> a. Mengakses perangkat jaringan dari jarak jauh</div>
+                    <div class="option"><input type="radio" name="q46" value="b"> b. Mengirim email</div>
+                    <div class="option"><input type="radio" name="q46" value="c"> c. Transfer file</div>
+                    <div class="option"><input type="radio" name="q46" value="d"> d. Konfigurasi IP</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation46')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation46">
+                    <strong>Jawaban: a. Mengakses perangkat jaringan dari jarak jauh</strong><br>
+                    Penjelasan: Telnet memberikan akses terminal ke perangkat lain melalui jaringan.
+                </div>
+            </div>
+            
+            <!-- Soal 47 -->
+            <div class="question">
+                <div class="question-number">47. Apa perbedaan antara LAN dan WAN?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q47" value="a"> a. LAN mencakup area kecil, WAN mencakup area besar</div>
+                    <div class="option"><input type="radio" name="q47" value="b"> b. LAN menggunakan kabel, WAN tidak</div>
+                    <div class="option"><input type="radio" name="q47" value="c"> c. WAN lebih cepat dari LAN</div>
+                    <div class="option"><input type="radio" name="q47" value="d"> d. LAN untuk internet, WAN untuk lokal</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation47')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation47">
+                    <strong>Jawaban: a. LAN mencakup area kecil, WAN mencakup area besar</strong><br>
+                    Penjelasan: LAN adalah jaringan lokal di area terbatas, WAN menghubungkan jaringan yang tersebar luas.
+                </div>
+            </div>
+            
+            <!-- Soal 48 -->
+            <div class="question">
+                <div class="question-number">48. Apa fungsi protokol SNMP?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q48" value="a"> a. Mengatur alamat IP</div>
+                    <div class="option"><input type="radio" name="q48" value="b"> b. Monitoring dan pengelolaan perangkat jaringan</div>
+                    <div class="option"><input type="radio" name="q48" value="c"> c. Mentranfer file</div>
+                    <div class="option"><input type="radio" name="q48" value="d"> d. Mengirim email</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation48')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation48">
+                    <strong>Jawaban: b. Monitoring dan pengelolaan perangkat jaringan</strong><br>
+                    Penjelasan: SNMP (Simple Network Management Protocol) digunakan untuk mengelola dan memantau perangkat jaringan.
+                </div>
+            </div>
+            
+            <!-- Soal 49 -->
+            <div class="question">
+                <div class="question-number">49. Apa yang dimaksud dengan firewall stateful?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q49" value="a"> a. Firewall yang memeriksa status koneksi untuk menentukan apakah paket diperbolehkan</div>
+                    <div class="option"><input type="radio" name="q49" value="b"> b. Firewall yang hanya mengizinkan trafik masuk</div>
+                    <div class="option"><input type="radio" name="q49" value="c"> c. Firewall yang menyimpan data jaringan</div>
+                    <div class="option"><input type="radio" name="q49" value="d"> d. Firewall yang menghubungkan jaringan</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation49')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation49">
+                    <strong>Jawaban: a. Firewall yang memeriksa status koneksi untuk menentukan apakah paket diperbolehkan</strong><br>
+                    Penjelasan: Stateful firewall melacak keadaan koneksi untuk pengamanan yang lebih canggih.
+                </div>
+            </div>
+            
+            <!-- Soal 50 -->
+            <div class="question">
+                <div class="question-number">50. Apa fungsi dari protokol ICMP?</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q50" value="a"> a. Mengatur pengiriman email</div>
+                    <div class="option"><input type="radio" name="q50" value="b"> b. Mengirim pesan status dan error antar perangkat jaringan</div>
+                    <div class="option"><input type="radio" name="q50" value="c"> c. Membantu transfer file</div>
+                    <div class="option"><input type="radio" name="q50" value="d"> d. Merutekan paket data</div>
+                </div>
+                <button type="button" class="show-explanation" onclick="toggleExplanation('explanation50')">Tampilkan Penjelasan</button>
+                <div class="explanation" id="explanation50">
+                    <strong>Jawaban: b. Mengirim pesan status dan error antar perangkat jaringan</strong><br>
+                    Penjelasan: ICMP memberikan informasi kontrol dan kesalahan dalam jaringan IP.
+                </div>
+            </div>
+            
+            <button type="button" class="submit-btn" onclick="checkAnswers()">Periksa Jawaban</button>
+        </form>
+        
+        <div class="results" id="results">
+            <div class="score" id="score"></div>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+
+    <script>
+        // Jawaban yang benar untuk setiap soal
+        const correctAnswers = {
+            q1: 'b', q2: 'b', q3: 'c', q4: 'b', q5: 'b',
+            q6: 'a', q7: 'b', q8: 'b', q9: 'b', q10: 'b',
+            q11: 'a', q12: 'b', q13: 'b', q14: 'b', q15: 'b',
+            q16: 'b', q17: 'b', q18: 'b', q19: 'b', q20: 'a',
+            q21: 'b', q22: 'b', q23: 'c', q24: 'b', q25: 'b',
+            q26: 'b', q27: 'b', q28: 'b', q29: 'b', q30: 'b',
+            q31: 'b', q32: 'b', q33: 'a', q34: 'a', q35: 'a',
+            q36: 'a', q37: 'b', q38: 'b', q39: 'b', q40: 'b',
+            q41: 'b', q42: 'b', q43: 'b', q44: 'b', q45: 'b',
+            q46: 'a', q47: 'a', q48: 'b', q49: 'a', q50: 'b'
+        };
+        
+        // Fungsi untuk menampilkan/menyembunyikan penjelasan
+        function toggleExplanation(id) {
+            const explanation = document.getElementById(id);
+            if (explanation.style.display === 'block') {
+                explanation.style.display = 'none';
+            } else {
+                explanation.style.display = 'block';
+            }
+        }
+        
+        // Fungsi untuk memeriksa jawaban
+        function checkAnswers() {
+            let score = 0;
+            let totalQuestions = Object.keys(correctAnswers).length;
+            let detailedResults = '';
+            
+            // Periksa setiap soal
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = 'q' + i;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[questionName]) {
+                        score++;
+                        detailedResults += `<p class="correct">Soal ${i}: Benar</p>`;
+                    } else {
+                        detailedResults += `<p class="incorrect">Soal ${i}: Salah. Jawaban yang benar adalah ${correctAnswers[questionName].toUpperCase()}</p>`;
+                    }
+                } else {
+                    detailedResults += `<p class="incorrect">Soal ${i}: Tidak dijawab. Jawaban yang benar adalah ${correctAnswers[questionName].toUpperCase()}</p>`;
+                }
+            }
+            
+            // Tampilkan hasil
+            const resultsDiv = document.getElementById('results');
+            const scoreDiv = document.getElementById('score');
+            const detailedResultsDiv = document.getElementById('detailed-results');
+            
+            scoreDiv.textContent = `Skor Anda: ${score} dari ${totalQuestions}`;
+            detailedResultsDiv.innerHTML = detailedResults;
+            resultsDiv.style.display = 'block';
+            
+            // Scroll ke hasil
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
