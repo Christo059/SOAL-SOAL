@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Jaringan Komputer - Transport Layer (Bab 4)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #2c3e50, #4a6491);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .quiz-info {
+            display: flex;
+            justify-content: space-between;
+            background-color: #f8f9fa;
+            padding: 15px 25px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .info-label {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        .info-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .content {
+            padding: 25px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .question-number {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .question-number::before {
+            content: "Soal";
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .question-text {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+        
+        .options {
+            margin-left: 10px;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #e9ecef;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            display: none;
+            border-left: 3px solid #3498db;
+        }
+        
+        .show-explanation {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+        
+        .show-explanation:hover {
+            background-color: #2980b9;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 25px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .nav-btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+        
+        .nav-btn:hover {
+            background-color: #1a252f;
+        }
+        
+        .nav-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .submit-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .results {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+        }
+        
+        .score {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .score-value {
+            font-size: 3rem;
+            color: #2ecc71;
+            margin: 0 10px;
+        }
+        
+        .detailed-results {
+            text-align: left;
+            margin-top: 20px;
+        }
+        
+        .result-item {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+        
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 3px solid #28a745;
+        }
+        
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 3px solid #dc3545;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .info-item {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-btn, .submit-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Kuis Jaringan Komputer - Transport Layer</h1>
+            <div class="subtitle">Bab 4 - Protokol TCP dan UDP</div>
+        </header>
+        
+        <div class="quiz-info">
+            <div class="info-item">
+                <span class="info-label">Total Soal</span>
+                <span class="info-value">25</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Bab</span>
+                <span class="info-value">4</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Waktu</span>
+                <span class="info-value">60 Menit</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <form id="quiz-form">
+                <!-- Soal 1 -->
+                <div class="question">
+                    <div class="question-number">1</div>
+                    <div class="question-text">Transport Layer dalam model OSI berfungsi untuk...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q1" value="a"> a. Menghubungkan aplikasi dengan jaringan fisik</div>
+                        <div class="option"><input type="radio" name="q1" value="b"> b. Menyediakan layanan transportasi data dari host ke tujuan</div>
+                        <div class="option"><input type="radio" name="q1" value="c"> c. Mengatur pengalamatan IP pada jaringan</div>
+                        <div class="option"><input type="radio" name="q1" value="d"> d. Mengelola koneksi antar router</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation1')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation1">
+                        <strong>Jawaban: b. Menyediakan layanan transportasi data dari host ke tujuan</strong><br>
+                        Penjelasan: Transport Layer bertanggung jawab untuk menyediakan layanan end-to-end yang andal untuk mentransfer data antara host sumber dan host tujuan.
+                    </div>
+                </div>
+                
+                <!-- Soal 2 -->
+                <div class="question">
+                    <div class="question-number">2</div>
+                    <div class="question-text">Dua protokol utama yang bekerja pada Transport Layer adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q2" value="a"> a. HTTP dan FTP</div>
+                        <div class="option"><input type="radio" name="q2" value="b"> b. TCP dan UDP</div>
+                        <div class="option"><input type="radio" name="q2" value="c"> c. IP dan ICMP</div>
+                        <div class="option"><input type="radio" name="q2" value="d"> d. DNS dan DHCP</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation2')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation2">
+                        <strong>Jawaban: b. TCP dan UDP</strong><br>
+                        Penjelasan: TCP (Transmission Control Protocol) dan UDP (User Datagram Protocol) adalah dua protokol utama yang beroperasi pada Transport Layer.
+                    </div>
+                </div>
+                
+                <!-- Soal 3 -->
+                <div class="question">
+                    <div class="question-number">3</div>
+                    <div class="question-text">Karakteristik utama dari TCP adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q3" value="a"> a. Connectionless dan unreliable</div>
+                        <div class="option"><input type="radio" name="q3" value="b"> b. Connection-oriented dan reliable</div>
+                        <div class="option"><input type="radio" name="q3" value="c"> c. Low overhead dan best effort</div>
+                        <div class="option"><input type="radio" name="q3" value="d"> d. Tidak ada flow control</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation3')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation3">
+                        <strong>Jawaban: b. Connection-oriented dan reliable</strong><br>
+                        Penjelasan: TCP adalah protokol yang connection-oriented (membutuhkan pembentukan koneksi) dan reliable (andal) dengan mekanisme acknowledgments dan retransmission.
+                    </div>
+                </div>
+                
+                <!-- Soal 4 -->
+                <div class="question">
+                    <div class="question-number">4</div>
+                    <div class="question-text">Karakteristik utama dari UDP adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q4" value="a"> a. Connection-oriented dan reliable</div>
+                        <div class="option"><input type="radio" name="q4" value="b"> b. Connectionless dan best effort delivery</div>
+                        <div class="option"><input type="radio" name="q4" value="c"> c. Error checking dan flow control</div>
+                        <div class="option"><input type="radio" name="q4" value="d"> d. Sequencing dan acknowledgements</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation4')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation4">
+                        <strong>Jawaban: b. Connectionless dan best effort delivery</strong><br>
+                        Penjelasan: UDP adalah protokol yang connectionless (tidak membutuhkan pembentukan koneksi) dan menggunakan best effort delivery (pengiriman sebaik mungkin tanpa jaminan).
+                    </div>
+                </div>
+                
+                <!-- Soal 5 -->
+                <div class="question">
+                    <div class="question-number">5</div>
+                    <div class="question-text">Fungsi utama segmentation pada Transport Layer adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q5" value="a"> a. Mengenkripsi data sebelum dikirim</div>
+                        <div class="option"><input type="radio" name="q5" value="b"> b. Membagi data menjadi bagian-bagian yang lebih kecil</div>
+                        <div class="option"><input type="radio" name="q5" value="c"> c. Mengkompresi data untuk menghemat bandwidth</div>
+                        <div class="option"><input type="radio" name="q5" value="d"> d. Menyembunyikan alamat IP</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation5')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation5">
+                        <strong>Jawaban: b. Membagi data menjadi bagian-bagian yang lebih kecil</strong><br>
+                        Penjelasan: Segmentation adalah proses membagi data aplikasi menjadi segmen-segmen yang lebih kecil untuk memudahkan transmisi dan meningkatkan efisiensi jaringan.
+                    </div>
+                </div>
+                
+                <!-- Soal 6 -->
+                <div class="question">
+                    <div class="question-number">6</div>
+                    <div class="question-text">Port number yang termasuk dalam well-known ports range adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q6" value="a"> a. 0 - 1023</div>
+                        <div class="option"><input type="radio" name="q6" value="b"> b. 1024 - 49151</div>
+                        <div class="option"><input type="radio" name="q6" value="c"> c. 49152 - 65535</div>
+                        <div class="option"><input type="radio" name="q6" value="d"> d. 65536 - 70000</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation6')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation6">
+                        <strong>Jawaban: a. 0 - 1023</strong><br>
+                        Penjelasan: Well-known ports berkisar dari 0 hingga 1023 dan digunakan untuk layanan-layanan standar seperti HTTP (port 80), FTP (port 21), dan SSH (port 22).
+                    </div>
+                </div>
+                
+                <!-- Soal 7 -->
+                <div class="question">
+                    <div class="question-number">7</div>
+                    <div class="question-text">Port number 80 biasanya digunakan untuk protokol...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q7" value="a"> a. FTP</div>
+                        <div class="option"><input type="radio" name="q7" value="b"> b. HTTP</div>
+                        <div class="option"><input type="radio" name="q7" value="c"> c. SMTP</div>
+                        <div class="option"><input type="radio" name="q7" value="d"> d. DNS</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation7')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation7">
+                        <strong>Jawaban: b. HTTP</strong><br>
+                        Penjelasan: Port 80 adalah port standar untuk HTTP (Hypertext Transfer Protocol) yang digunakan untuk komunikasi web.
+                    </div>
+                </div>
+                
+                <!-- Soal 8 -->
+                <div class="question">
+                    <div class="question-number">8</div>
+                    <div class="question-text">Port number 53 digunakan oleh kedua protokol TCP dan UDP untuk layanan...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q8" value="a"> a. HTTP</div>
+                        <div class="option"><input type="radio" name="q8" value="b"> b. DNS</div>
+                        <div class="option"><input type="radio" name="q8" value="c"> c. FTP</div>
+                        <div class="option"><input type="radio" name="q8" value="d"> d. SMTP</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation8')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation8">
+                        <strong>Jawaban: b. DNS</strong><br>
+                        Penjelasan: Port 53 digunakan oleh DNS (Domain Name System) untuk kedua protokol TCP (untuk zone transfer) dan UDP (untuk query biasa).
+                    </div>
+                </div>
+                
+                <!-- Soal 9 -->
+                <div class="question">
+                    <div class="question-number">9</div>
+                    <div class="question-text">Proses "three-way handshake" dilakukan oleh protokol...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q9" value="a"> a. UDP</div>
+                        <div class="option"><input type="radio" name="q9" value="b"> b. TCP</div>
+                        <div class="option"><input type="radio" name="q9" value="c"> c. HTTP</div>
+                        <div class="option"><input type="radio" name="q9" value="d"> d. DNS</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation9')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation9">
+                        <strong>Jawaban: b. TCP</strong><br>
+                        Penjelasan: Three-way handshake adalah proses yang digunakan oleh TCP untuk membentuk koneksi yang andal antara dua host sebelum pertukaran data dimulai.
+                    </div>
+                </div>
+                
+                <!-- Soal 10 -->
+                <div class="question">
+                    <div class="question-number">10</div>
+                    <div class="question-text">Urutan yang benar dalam three-way handshake adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q10" value="a"> a. SYN, SYN-ACK, ACK</div>
+                        <div class="option"><input type="radio" name="q10" value="b"> b. ACK, SYN, SYN-ACK</div>
+                        <div class="option"><input type="radio" name="q10" value="c"> c. SYN, ACK, FIN</div>
+                        <div class="option"><input type="radio" name="q10" value="d"> d. SYN, SYN, ACK</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation10')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation10">
+                        <strong>Jawaban: a. SYN, SYN-ACK, ACK</strong><br>
+                        Penjelasan: Urutan three-way handshake: 1) Client mengirim SYN, 2) Server merespons dengan SYN-ACK, 3) Client mengirim ACK untuk menyelesaikan pembentukan koneksi.
+                    </div>
+                </div>
+                
+                <!-- Soal 11 -->
+                <div class="question">
+                    <div class="question-number">11</div>
+                    <div class="question-text">Field dalam header TCP yang digunakan untuk mengontrol flow data disebut...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q11" value="a"> a. Sequence Number</div>
+                        <div class="option"><input type="radio" name="q11" value="b"> b. Acknowledgement Number</div>
+                        <div class="option"><input type="radio" name="q11" value="c"> c. Window Size</div>
+                        <div class="option"><input type="radio" name="q11" value="d"> d. Checksum</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation11')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation11">
+                        <strong>Jawaban: c. Window Size</strong><br>
+                        Penjelasan: Window Size field dalam header TCP digunakan untuk flow control, menunjukkan jumlah data yang dapat diterima oleh penerima sebelum memerlukan acknowledgment.
+                    </div>
+                </div>
+                
+                <!-- Soal 12 -->
+                <div class="question">
+                    <div class="question-number">12</div>
+                    <div class="question-text">Mekanisme yang digunakan TCP untuk mengirim ulang segment yang hilang disebut...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q12" value="a"> a. Flow Control</div>
+                        <div class="option"><input type="radio" name="q12" value="b"> b. Error Recovery</div>
+                        <div class="option"><input type="radio" name="q12" value="c"> c. Retransmission</div>
+                        <div class="option"><input type="radio" name="q12" value="d"> d. Segmentation</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation12')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation12">
+                        <strong>Jawaban: c. Retransmission</strong><br>
+                        Penjelasan: Retransmission adalah mekanisme TCP untuk mengirim ulang segmen yang hilang atau rusak berdasarkan timeout atau duplicate acknowledgments.
+                    </div>
+                </div>
+                
+                <!-- Soal 13 -->
+                <div class="question">
+                    <div class="question-number">13</div>
+                    <div class="question-text">Protokol yang cocok untuk aplikasi real-time seperti VoIP dan online games adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q13" value="a"> a. TCP</div>
+                        <div class="option"><input type="radio" name="q13" value="b"> b. UDP</div>
+                        <div class="option"><input type="radio" name="q13" value="c"> c. HTTP</div>
+                        <div class="option"><input type="radio" name="q13" value="d"> d. FTP</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation13')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation13">
+                        <strong>Jawaban: b. UDP</strong><br>
+                        Penjelasan: UDP cocok untuk aplikasi real-time seperti VoIP dan game online karena overhead yang rendah dan tidak ada delay akibat retransmission.
+                    </div>
+                </div>
+                
+                <!-- Soal 14 -->
+                <div class="question">
+                    <div class="question-number">14</div>
+                    <div class="question-text">Kombinasi antara IP address dan port number disebut...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q14" value="a"> a. Segment</div>
+                        <div class="option"><input type="radio" name="q14" value="b"> b. Datagram</div>
+                        <div class="option"><input type="radio" name="q14" value="c"> c. Socket</div>
+                        <div class="option"><input type="radio" name="q14" value="d"> d. Frame</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation14')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation14">
+                        <strong>Jawaban: c. Socket</strong><br>
+                        Penjelasan: Socket adalah kombinasi unik dari alamat IP dan port number yang mengidentifikasi endpoint komunikasi tertentu dalam jaringan.
+                    </div>
+                </div>
+                
+                <!-- Soal 15 -->
+                <div class="question">
+                    <div class="question-number">15</div>
+                    <div class="question-text">Contoh aplikasi yang menggunakan TCP adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q15" value="a"> a. DNS</div>
+                        <div class="option"><input type="radio" name="q15" value="b"> b. DHCP</div>
+                        <div class="option"><input type="radio" name="q15" value="c"> c. HTTP</div>
+                        <div class="option"><input type="radio" name="q15" value="d"> d. TFTP</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation15')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation15">
+                        <strong>Jawaban: c. HTTP</strong><br>
+                        Penjelasan: HTTP menggunakan TCP karena membutuhkan koneksi yang andal untuk mentransfer halaman web dan konten terkait.
+                    </div>
+                </div>
+                
+                <!-- Soal 16 -->
+                <div class="question">
+                    <div class="question-number">16</div>
+                    <div class="question-text">Contoh aplikasi yang menggunakan UDP adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q16" value="a"> a. FTP</div>
+                        <div class="option"><input type="radio" name="q16" value="b"> b. Telnet</div>
+                        <div class="option"><input type="radio" name="q16" value="c"> c. SMTP</div>
+                        <div class="option"><input type="radio" name="q16" value="d"> d. DNS</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation16')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation16">
+                        <strong>Jawaban: d. DNS</strong><br>
+                        Penjelasan: DNS biasanya menggunakan UDP untuk query biasa karena overhead yang rendah dan kecepatan respons yang lebih cepat.
+                    </div>
+                </div>
+                
+                <!-- Soal 17 -->
+                <div class="question">
+                    <div class="question-number">17</div>
+                    <div class="question-text">Fungsi dari sequence numbers dalam TCP adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q17" value="a"> a. Mengidentifikasi aplikasi</div>
+                        <div class="option"><input type="radio" name="q17" value="b"> b. Melacak urutan segment untuk reassembly</div>
+                        <div class="option"><input type="radio" name="q17" value="c"> c. Menentukan kecepatan transfer</div>
+                        <div class="option"><input type="radio" name="q17" value="d"> d. Mengenkripsi data</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation17')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation17">
+                        <strong>Jawaban: b. Melacak urutan segment untuk reassembly</strong><br>
+                        Penjelasan: Sequence numbers digunakan untuk melacak urutan segmen TCP sehingga penerima dapat menyusun ulang data dalam urutan yang benar.
+                    </div>
+                </div>
+                
+                <!-- Soal 18 -->
+                <div class="question">
+                    <div class="question-number">18</div>
+                    <div class="question-text">Dalam TCP, flow control dilakukan dengan mengatur...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q18" value="a"> a. Sequence numbers</div>
+                        <div class="option"><input type="radio" name="q18" value="b"> b. Window size</div>
+                        <div class="option"><input type="radio" name="q18" value="c"> c. Port numbers</div>
+                        <div class="option"><input type="radio" name="q18" value="d"> d. MAC addresses</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation18')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation18">
+                        <strong>Jawaban: b. Window size</strong><br>
+                        Penjelasan: Flow control dalam TCP dilakukan dengan mengatur window size, yang menentukan jumlah data yang dapat dikirim sebelum memerlukan acknowledgment.
+                    </div>
+                </div>
+                
+                <!-- Soal 19 -->
+                <div class="question">
+                    <div class="question-number">19</div>
+                    <div class="question-text">Protokol yang tidak melakukan proses connection establishment adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q19" value="a"> a. TCP</div>
+                        <div class="option"><input type="radio" name="q19" value="b"> b. UDP</div>
+                        <div class="option"><input type="radio" name="q19" value="c"> c. HTTP</div>
+                        <div class="option"><input type="radio" name="q19" value="d"> d. FTP</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation19')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation19">
+                        <strong>Jawaban: b. UDP</strong><br>
+                        Penjelasan: UDP adalah protokol connectionless yang tidak melakukan proses connection establishment seperti three-way handshake pada TCP.
+                    </div>
+                </div>
+                
+                <!-- Soal 20 -->
+                <div class="question">
+                    <div class="question-number">20</div>
+                    <div class="question-text">Port number yang digunakan untuk HTTPS adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q20" value="a"> a. 80</div>
+                        <div class="option"><input type="radio" name="q20" value="b"> b. 443</div>
+                        <div class="option"><input type="radio" name="q20" value="c"> c. 21</div>
+                        <div class="option"><input type="radio" name="q20" value="d"> d. 25</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation20')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation20">
+                        <strong>Jawaban: b. 443</strong><br>
+                        Penjelasan: Port 443 adalah port standar untuk HTTPS (HTTP Secure) yang menggunakan enkripsi SSL/TLS untuk komunikasi web yang aman.
+                    </div>
+                </div>
+                
+                <!-- Soal 21 -->
+                <div class="question">
+                    <div class="question-number">21</div>
+                    <div class="question-text">Proses pengiriman data dimana pengirim menunggu acknowledgement sebelum mengirim data berikutnya disebut...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q21" value="a"> a. Full-duplex</div>
+                        <div class="option"><input type="radio" name="q21" value="b"> b. Stop-and-wait</div>
+                        <div class="option"><input type="radio" name="q21" value="c"> c. Three-way handshake</div>
+                        <div class="option"><input type="radio" name="q21" value="d"> d. Flow control</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation21')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation21">
+                        <strong>Jawaban: b. Stop-and-wait</strong><br>
+                        Penjelasan: Stop-and-wait adalah metode sederhana dimana pengirim mengirim satu paket dan menunggu acknowledgment sebelum mengirim paket berikutnya.
+                    </div>
+                </div>
+                
+                <!-- Soal 22 -->
+                <div class="question">
+                    <div class="question-number">22</div>
+                    <div class="question-text">Keuntungan utama UDP dibandingkan TCP adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q22" value="a"> a. Reliabilitas yang tinggi</div>
+                        <div class="option"><input type="radio" name="q22" value="b"> b. Overhead yang rendah</div>
+                        <div class="option"><input type="radio" name="q22" value="c"> c. Flow control yang baik</div>
+                        <div class="option"><input type="radio" name="q22" value="d"> d. Error recovery yang handal</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation22')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation22">
+                        <strong>Jawaban: b. Overhead yang rendah</strong><br>
+                        Penjelasan: Keuntungan utama UDP adalah overhead yang rendah karena tidak ada mekanisme connection establishment, flow control, atau retransmission.
+                    </div>
+                </div>
+                
+                <!-- Soal 23 -->
+                <div class="question">
+                    <div class="question-number">23</div>
+                    <div class="question-text">Dalam TCP, field yang menandakan tidak ada data lagi yang akan dikirim adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q23" value="a"> a. SYN</div>
+                        <div class="option"><input type="radio" name="q23" value="b"> b. ACK</div>
+                        <div class="option"><input type="radio" name="q23" value="c"> c. FIN</div>
+                        <div class="option"><input type="radio" name="q23" value="d"> d. RST</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation23')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation23">
+                        <strong>Jawaban: c. FIN</strong><br>
+                        Penjelasan: FIN (Finish) flag dalam header TCP menandakan bahwa pengirim telah selesai mengirim data dan ingin menutup koneksi.
+                    </div>
+                </div>
+                
+                <!-- Soal 24 -->
+                <div class="question">
+                    <div class="question-number">24</div>
+                    <div class="question-text">Protokol yang menggunakan two-way handshake untuk termination adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q24" value="a"> a. UDP</div>
+                        <div class="option"><input type="radio" name="q24" value="b"> b. TCP</div>
+                        <div class="option"><input type="radio" name="q24" value="c"> c. HTTP</div>
+                        <div class="option"><input type="radio" name="q24" value="d"> d. DNS</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation24')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation24">
+                        <strong>Jawaban: b. TCP</strong><br>
+                        Penjelasan: TCP menggunakan two-way handshake untuk termination koneksi, dimana setiap sisi mengirim FIN dan menerima ACK.
+                    </div>
+                </div>
+                
+                <!-- Soal 25 -->
+                <div class="question">
+                    <div class="question-number">25</div>
+                    <div class="question-text">Aplikasi yang membutuhkan keandalan tinggi dalam pengiriman data sebaiknya menggunakan...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q25" value="a"> a. UDP</div>
+                        <div class="option"><input type="radio" name="q25" value="b"> b. TCP</div>
+                        <div class="option"><input type="radio" name="q25" value="c"> c. DNS</div>
+                        <div class="option"><input type="radio" name="q25" value="d"> d. DHCP</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation25')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation25">
+                        <strong>Jawaban: b. TCP</strong><br>
+                        Penjelasan: Aplikasi yang membutuhkan keandalan tinggi seperti transfer file, email, dan web browsing sebaiknya menggunakan TCP karena mekanisme reliability-nya.
+                    </div>
+                </div>
+                
+            </form>
+            
+            <div class="results" id="results">
+                <div class="score">Skor Anda: <span class="score-value" id="score-value">0</span> dari 25</div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                <div id="detailed-results" class="detailed-results"></div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn" onclick="prevQuestion()" disabled>Soal Sebelumnya</button>
+            <button class="submit-btn" onclick="checkAnswers()">Periksa Jawaban</button>
+            <button class="nav-btn" id="next-btn" onclick="nextQuestion()">Soal Berikutnya</button>
+        </div>
+    </div>
+
+    <script>
+        // Jawaban yang benar untuk setiap soal
+        const correctAnswers = {
+            q1: 'b', q2: 'b', q3: 'b', q4: 'b', q5: 'b',
+            q6: 'a', q7: 'b', q8: 'b', q9: 'b', q10: 'a',
+            q11: 'c', q12: 'c', q13: 'b', q14: 'c', q15: 'c',
+            q16: 'd', q17: 'b', q18: 'b', q19: 'b', q20: 'b',
+            q21: 'b', q22: 'b', q23: 'c', q24: 'b', q25: 'b'
+        };
+        
+        let currentQuestion = 1;
+        const totalQuestions = Object.keys(correctAnswers).length;
+        
+        // Fungsi untuk menampilkan/menyembunyikan penjelasan
+        function toggleExplanation(id) {
+            const explanation = document.getElementById(id);
+            if (explanation.style.display === 'block') {
+                explanation.style.display = 'none';
+            } else {
+                explanation.style.display = 'block';
+            }
+        }
+        
+        // Fungsi untuk navigasi soal
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.querySelector(`.question:nth-child(${currentQuestion})`).style.display = 'none';
+                currentQuestion++;
+                document.querySelector(`.question:nth-child(${currentQuestion})`).style.display = 'block';
+                updateNavigationButtons();
+            }
+        }
+        
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                document.querySelector(`.question:nth-child(${currentQuestion})`).style.display = 'none';
+                currentQuestion--;
+                document.querySelector(`.question:nth-child(${currentQuestion})`).style.display = 'block';
+                updateNavigationButtons();
+            }
+        }
+        
+        function updateNavigationButtons() {
+            document.getElementById('prev-btn').disabled = currentQuestion === 1;
+            document.getElementById('next-btn').disabled = currentQuestion === totalQuestions;
+        }
+        
+        // Fungsi untuk memeriksa jawaban
+        function checkAnswers() {
+            let score = 0;
+            let totalQuestions = Object.keys(correctAnswers).length;
+            let detailedResults = '';
+            
+            // Periksa setiap soal
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = 'q' + i;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[questionName]) {
+                        score++;
+                        detailedResults += `<div class="result-item correct">Soal ${i}: Benar</div>`;
+                    } else {
+                        detailedResults += `<div class="result-item incorrect">Soal ${i}: Salah. Jawaban yang benar adalah ${correctAnswers[questionName].toUpperCase()}</div>`;
+                    }
+                } else {
+                    detailedResults += `<div class="result-item incorrect">Soal ${i}: Tidak dijawab. Jawaban yang benar adalah ${correctAnswers[questionName].toUpperCase()}</div>`;
+                }
+            }
+            
+            // Tampilkan hasil
+            const resultsDiv = document.getElementById('results');
+            const scoreValue = document.getElementById('score-value');
+            const progressBar = document.getElementById('progress-bar');
+            const detailedResultsDiv = document.getElementById('detailed-results');
+            
+            scoreValue.textContent = score;
+            progressBar.style.width = `${(score / totalQuestions) * 100}%`;
+            detailedResultsDiv.innerHTML = detailedResults;
+            resultsDiv.style.display = 'block';
+            
+            // Scroll ke hasil
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Inisialisasi tampilan soal pertama
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sembunyikan semua soal kecuali yang pertama
+            const questions = document.querySelectorAll('.question');
+            for (let i = 1; i < questions.length; i++) {
+                questions[i].style.display = 'none';
+            }
+            updateNavigationButtons();
+        });
+    </script>
+</body>
+</html>
