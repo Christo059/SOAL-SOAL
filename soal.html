@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Jaringan Komputer - CIT</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #2c3e50, #4a6491);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .quiz-info {
+            display: flex;
+            justify-content: space-between;
+            background-color: #f8f9fa;
+            padding: 15px 25px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .info-label {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        .info-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .content {
+            padding: 25px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .question-number {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .question-number::before {
+            content: "Soal";
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .question-text {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+        
+        .options {
+            margin-left: 10px;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #e9ecef;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            display: none;
+            border-left: 3px solid #3498db;
+        }
+        
+        .show-explanation {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+        
+        .show-explanation:hover {
+            background-color: #2980b9;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 25px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .nav-btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+        
+        .nav-btn:hover {
+            background-color: #1a252f;
+        }
+        
+        .nav-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .submit-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .results {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+        }
+        
+        .score {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .score-value {
+            font-size: 3rem;
+            color: #2ecc71;
+            margin: 0 10px;
+        }
+        
+        .detailed-results {
+            text-align: left;
+            margin-top: 20px;
+        }
+        
+        .result-item {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+        
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 3px solid #28a745;
+        }
+        
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 3px solid #dc3545;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .info-item {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-btn, .submit-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Kuis Jaringan Komputer</h1>
+            <div class="subtitle">Uji pengetahuan Anda tentang konsep jaringan komputer - Bab 1 & 2</div>
+        </header>
+        
+        <div class="quiz-info">
+            <div class="info-item">
+                <span class="info-label">Total Soal</span>
+                <span class="info-value">47</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Bab</span>
+                <span class="info-value">1 & 2</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Waktu</span>
+                <span class="info-value">60 Menit</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <form id="quiz-form">
+                <!-- Soal 1-10 -->
+                <div class="question">
+                    <div class="question-number">1</div>
+                    <div class="question-text">Globalisasi Internet telah menyebabkan perubahan cepat dalam berbagai aspek kehidupan, KECUALI...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q1" value="a"> a. Interaksi sosial</div>
+                        <div class="option"><input type="radio" name="q1" value="b"> b. Komunikasi komersial</div>
+                        <div class="option"><input type="radio" name="q1" value="c"> c. Cara bertani tradisional</div>
+                        <div class="option"><input type="radio" name="q1" value="d"> d. Interaksi politik dan personal</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation1')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation1">
+                        <strong>Jawaban: c. Cara bertani tradisional</strong><br>
+                        Penjelasan: Globalisasi Internet telah mengubah hampir semua aspek kehidupan modern, tetapi cara bertani tradisional umumnya tidak terpengaruh secara langsung oleh Internet.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">2</div>
+                    <div class="question-text">Di balik layar, jaringan komputer merupakan kombinasi yang kompleks dari hal-hal berikut, KECUALI...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q2" value="a"> a. Protokol</div>
+                        <div class="option"><input type="radio" name="q2" value="b"> b. Perangkat Lunak (Software)</div>
+                        <div class="option"><input type="radio" name="q2" value="c"> c. Kabel listrik</div>
+                        <div class="option"><input type="radio" name="q2" value="d"> d. Perangkat Keras (Hardware)</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation2')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation2">
+                        <strong>Jawaban: c. Kabel listrik</strong><br>
+                        Penjelasan: Jaringan komputer terdiri dari protokol, perangkat lunak, dan perangkat keras, tetapi kabel listrik bukan komponen jaringan komputer meskipun digunakan untuk menyalakan perangkat.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">3</div>
+                    <div class="question-text">Berikut ini adalah contoh layanan yang dituntut oleh pengguna jaringan modern, KECUALI...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q3" value="a"> a. Video on Demand</div>
+                        <div class="option"><input type="radio" name="q3" value="b"> b. Ketersediaan 24 x 7</div>
+                        <div class="option"><input type="radio" name="q3" value="c"> c. Pengiriman surat via pos</div>
+                        <div class="option"><input type="radio" name="q3" value="d"> d. Voice over IP</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation3')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation3">
+                        <strong>Jawaban: c. Pengiriman surat via pos</strong><br>
+                        Penjelasan: Pengiriman surat via pos adalah layanan tradisional yang tidak termasuk dalam tuntutan layanan jaringan modern seperti Video on Demand, ketersediaan 24/7, dan VoIP.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">4</div>
+                    <div class="question-text">Pada masa awal komunikasi, video komunikasi bersifat...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q4" value="a"> a. Dua arah dan interaktif</div>
+                        <div class="option"><input type="radio" name="q4" value="b"> b. Satu arah menggunakan televisi</div>
+                        <div class="option"><input type="radio" name="q4" value="c"> c. Hanya untuk keperluan militer</div>
+                        <div class="option"><input type="radio" name="q4" value="d"> d. Dilakukan melalui telepon</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation4')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation4">
+                        <strong>Jawaban: b. Satu arah menggunakan televisi</strong><br>
+                        Penjelasan: Pada masa awal, komunikasi video bersifat satu arah melalui televisi, berbeda dengan komunikasi video modern yang interaktif dan dua arah.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">5</div>
+                    <div class="question-text">Kelebihan utama jaringan today dibandingkan early days adalah kemampuannya untuk membawa berbagai jenis informasi...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q5" value="a"> a. Secara bergantian</div>
+                        <div class="option"><input type="radio" name="q5" value="b"> b. Hanya untuk teks</div>
+                        <div class="option"><input type="radio" name="q5" value="c"> c. Secara bersamaan (Simultaneously)</div>
+                        <div class="option"><input type="radio" name="q5" value="d"> d. Dengan kecepatan sangat lambat</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation5')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation5">
+                        <strong>Jawaban: c. Secara bersamaan (Simultaneously)</strong><br>
+                        Penjelasan: Jaringan modern mampu membawa berbagai jenis informasi (suara, video, data) secara bersamaan melalui teknologi konvergensi jaringan.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">6</div>
+                    <div class="question-text">Manakah dari berikut ini yang BUKAN merupakan contoh platform komunikasi yang menggunakan sumber daya Internet?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q6" value="a"> a. Internet Relay Chat (IRC)</div>
+                        <div class="option"><input type="radio" name="q6" value="b"> b. Surat Kabar Cetak</div>
+                        <div class="option"><input type="radio" name="q6" value="c"> c. Wiki</div>
+                        <div class="option"><input type="radio" name="q6" value="d"> d. Podcasting</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation6')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation6">
+                        <strong>Jawaban: b. Surat Kabar Cetak</strong><br>
+                        Penjelasan: Surat kabar cetak adalah media tradisional yang tidak menggunakan sumber daya Internet, berbeda dengan IRC, Wiki, dan Podcasting yang semuanya berbasis Internet.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">7</div>
+                    <div class="question-text">Untuk memastikan komunikasi antara dua individu berhasil, kriteria yang paling penting adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q7" value="a"> a. Menggunakan bahasa yang paling populer</div>
+                        <div class="option"><input type="radio" name="q7" value="b"> b. Arti pesan yang diterima sama dengan arti pesan yang dikirim</div>
+                        <div class="option"><input type="radio" name="q7" value="c"> c. Pesan dikirim dengan kecepatan tinggi</div>
+                        <div class="option"><input type="radio" name="q7" value="d"> d. Menggunakan perangkat yang mahal</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation7')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation7">
+                        <strong>Jawaban: b. Arti pesan yang diterima sama dengan arti pesan yang dikirim</strong><br>
+                        Penjelasan: Keberhasilan komunikasi ditentukan oleh pemahaman yang sama antara pengirim dan penerima, bukan oleh kecepatan, bahasa, atau harga perangkat.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">8</div>
+                    <div class="question-text">Faktor EKSTERNAL yang dapat mempengaruhi kualitas komunikasi dalam jaringan data adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q8" value="a"> a. Kompleksitas pesan</div>
+                        <div class="option"><input type="radio" name="q8" value="b"> b. Pentingnya pesan</div>
+                        <div class="option"><input type="radio" name="q8" value="c"> c. Jumlah perangkat yang menangani pesan</div>
+                        <div class="option"><input type="radio" name="q8" value="d"> d. Motivasi pengirim</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation8')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation8">
+                        <strong>Jawaban: c. Jumlah perangkat yang menangani pesan</strong><br>
+                        Penjelasan: Jumlah perangkat yang menangani pesan adalah faktor eksternal yang dapat mempengaruhi kualitas komunikasi, sementara yang lainnya adalah faktor internal.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">9</div>
+                    <div class="question-text">Analogi "lebih sulit mengirim paket besar daripada beberapa paket kecil" dalam komunikasi menggambarkan pengaruh faktor...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q9" value="a"> a. Kecepatan</div>
+                        <div class="option"><input type="radio" name="q9" value="b"> b. Ukuran Pesan</div>
+                        <div class="option"><input type="radio" name="q9" value="c"> c. Bahasa</div>
+                        <div class="option"><input type="radio" name="q9" value="d"> d. Media</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation9')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation9">
+                        <strong>Jawaban: b. Ukuran Pesan</strong><br>
+                        Penjelasan: Analogi ini menggambarkan bagaimana ukuran pesan mempengaruhi kemudahan pengiriman, di mana pesan besar lebih sulit dikirim daripada beberapa pesan kecil.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">10</div>
+                    <div class="question-text">Keempat elemen dasar yang dimiliki oleh semua jaringan adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q10" value="a"> a. Server, Client, Kabel, Switch</div>
+                        <div class="option"><input type="radio" name="q10" value="b"> b. CPU, RAM, Harddisk, Monitor</div>
+                        <div class="option"><input type="radio" name="q10" value="c"> c. Pesan, Media, Perangkat, Aturan</div>
+                        <div class="option"><input type="radio" name="q10" value="d"> d. Pengirim, Penerima, Protokol, Keamanan</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation10')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation10">
+                        <strong>Jawaban: c. Pesan, Media, Perangkat, Aturan</strong><br>
+                        Penjelasan: Semua jaringan terdiri dari empat elemen dasar: pesan (data yang dikirim), media (saluran komunikasi), perangkat (perangkat keras), dan aturan (protokol).
+                    </div>
+                </div>
+                
+                <!-- Soal 11-20 -->
+                <div class="question">
+                    <div class="question-number">11</div>
+                    <div class="question-text">Protokol yang berfungsi untuk menerjemahkan nama domain menjadi alamat IP adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q11" value="a"> a. DHCP</div>
+                        <div class="option"><input type="radio" name="q11" value="b"> b. FTP</div>
+                        <div class="option"><input type="radio" name="q11" value="c"> c. DNS</div>
+                        <div class="option"><input type="radio" name="q11" value="d"> d. TCP/IP</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation11')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation11">
+                        <strong>Jawaban: c. DNS</strong><br>
+                        Penjelasan: DNS (Domain Name System) adalah protokol yang bertugas menerjemahkan nama domain (seperti google.com) menjadi alamat IP (seperti 172.217.0.142).
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">12</div>
+                    <div class="question-text">Langkah pertama dalam proses "Merangkai Semuanya" untuk mengirim data melalui jaringan adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q12" value="a"> a. Bit dikirim melalui media</div>
+                        <div class="option"><input type="radio" name="q12" value="b"> b. Data dikonversi menjadi biner</div>
+                        <div class="option"><input type="radio" name="q12" value="c"> c. Data diubah menjadi bentuk yang dapat dibaca manusia</div>
+                        <div class="option"><input type="radio" name="q12" value="d"> d. Pesan dialamatkan ulang</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation12')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation12">
+                        <strong>Jawaban: b. Data dikonversi menjadi biner</strong><br>
+                        Penjelasan: Langkah pertama dalam pengiriman data melalui jaringan adalah mengkonversi data menjadi format biner (bit) yang dapat diproses oleh perangkat jaringan.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">13</div>
+                    <div class="question-text">Konsolidasi jaringan telepon, radio, televisi, dan data komputer ke dalam satu platform disebut...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q13" value="a"> a. Jaringan Terdistribusi</div>
+                        <div class="option"><input type="radio" name="q13" value="b"> b. Jaringan Terkonvergensi (Converged Network)</div>
+                        <div class="option"><input type="radio" name="q13" value="c"> c. Jaringan Berbasis Protokol</div>
+                        <div class="option"><input type="radio" name="q13" value="d"> d. Jaringan Nirkabel</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation13')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation13">
+                        <strong>Jawaban: b. Jaringan Terkonvergensi (Converged Network)</strong><br>
+                        Penjelasan: Jaringan terkonvergensi adalah jaringan yang menggabungkan berbagai jenis komunikasi (suara, video, data) dalam satu infrastruktur.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">14</div>
+                    <div class="question-text">Arsitektur jaringan mencakup dua hal utama, yaitu...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q14" value="a"> a. Infrastruktur dan layanan/protokol</div>
+                        <div class="option"><input type="radio" name="q14" value="b"> b. Perangkat keras dan perangkat lunak</div>
+                        <div class="option"><input type="radio" name="q14" value="c"> c. Kabel dan sinyal nirkabel</div>
+                        <div class="option"><input type="radio" name="q14" value="d"> d. Pengguna dan administrator</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation14')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation14">
+                        <strong>Jawaban: a. Infrastruktur dan layanan/protokol</strong><br>
+                        Penjelasan: Arsitektur jaringan terdiri dari infrastruktur (perangkat keras dan media) serta layanan/protokol (aturan komunikasi).
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">15</div>
+                    <div class="question-text">Manakah dari berikut ini yang BUKAN merupakan salah satu dari empat karakteristik dasar yang harus dipenuhi jaringan untuk memenuhi harapan pengguna?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q15" value="a"> a. Fault Tolerance (Toleransi Kesalahan)</div>
+                        <div class="option"><input type="radio" name="q15" value="b"> b. Skalabilitas</div>
+                        <div class="option"><input type="radio" name="q15" value="c"> c. Harga Murah</div>
+                        <div class="option"><input type="radio" name="q15" value="d"> d. Keamanan (Security)</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation15')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation15">
+                        <strong>Jawaban: c. Harga Murah</strong><br>
+                        Penjelasan: Empat karakteristik dasar jaringan adalah Fault Tolerance, Skalabilitas, Quality of Service, dan Keamanan. Harga murah bukan karakteristik teknis jaringan.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">16</div>
+                    <div class="question-text">Jenis jaringan yang membagi data menjadi paket-paket yang dapat melalui rute yang berbeda untuk sampai ke tujuan adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q16" value="a"> a. Circuit-Switched</div>
+                        <div class="option"><input type="radio" name="q16" value="b"> b. Connection-Oriented</div>
+                        <div class="option"><input type="radio" name="q16" value="c"> c. Packet-Switched</div>
+                        <div class="option"><input type="radio" name="q16" value="d"> d. Dedicated Line</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation16')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation16">
+                        <strong>Jawaban: c. Packet-Switched</strong><br>
+                        Penjelasan: Jaringan packet-switched membagi data menjadi paket-paket kecil yang dapat mengambil rute berbeda menuju tujuan, meningkatkan efisiensi dan ketahanan.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">17</div>
+                    <div class="question-text">Kemampuan jaringan untuk menambahkan pengguna dan perangkat baru tanpa mengganggu layanan yang ada disebut...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q17" value="a"> a. Quality of Service (QoS)</div>
+                        <div class="option"><input type="radio" name="q17" value="b"> b. Keamanan</div>
+                        <div class="option"><input type="radio" name="q17" value="c"> c. Skalabilitas</div>
+                        <div class="option"><input type="radio" name="q17" value="d"> d. Toleransi Kesalahan</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation17')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation17">
+                        <strong>Jawaban: c. Skalabilitas</strong><br>
+                        Penjelasan: Skalabilitas adalah kemampuan jaringan untuk berkembang dan menampung pertumbuhan pengguna dan perangkat tanpa penurunan kinerja yang signifikan.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">18</div>
+                    <div class="question-text">Quality of Service (QoS) dalam jaringan sangat penting untuk memprioritaskan...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q18" value="a"> a. Biaya operasional termurah</div>
+                        <div class="option"><input type="radio" name="q18" value="b"> b. Jenis perangkat yang digunakan</div>
+                        <div class="option"><input type="radio" name="q18" value="c"> c. Layanan yang membutuhkan bandwidth dan latency konsisten (seperti video call)</div>
+                        <div class="option"><input type="radio" name="q18" value="d"> d. Jumlah pengguna yang terhubung</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation18')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation18">
+                        <strong>Jawaban: c. Layanan yang membutuhkan bandwidth dan latency konsisten (seperti video call)</strong><br>
+                        Penjelasan: QoS memprioritaskan lalu lintas yang membutuhkan kinerja konsisten seperti video call, VoIP, dan streaming untuk memastikan pengalaman pengguna yang baik.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">19</div>
+                    <div class="question-text">Tujuan dari "Memastikan Ketersediaan" (Ensuring Availability) dalam aspek keamanan jaringan adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q19" value="a"> a. Mencegah orang yang tidak berwenang membaca data</div>
+                        <div class="option"><input type="radio" name="q19" value="b"> b. Memastikan sistem tetap dapat diakses oleh pengguna yang berwenang</div>
+                        <div class="option"><input type="radio" name="q19" value="c"> c. Memeriksa apakah data tidak diubah selama pengiriman</div>
+                        <div class="option"><input type="radio" name="q19" value="d"> d. Menyembunyikan identitas pengguna</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation19')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation19">
+                        <strong>Jawaban: b. Memastikan sistem tetap dapat diakses oleh pengguna yang berwenang</strong><br>
+                        Penjelasan: Availability (ketersediaan) dalam keamanan jaringan memastikan bahwa sistem dan data dapat diakses oleh pengguna yang berwenang ketika dibutuhkan.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">20</div>
+                    <div class="question-text">Salah satu tren dalam jaringan adalah proliferasi perangkat. Apa arti dari proliferasi dalam konteks ini?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q20" value="a"> a. Penurunan jumlah perangkat</div>
+                        <div class="option"><input type="radio" name="q20" value="b"> b. Peningkatan yang cepat dan menyebar luasnya jumlah perangkat yang mampu terhubung ke jaringan</div>
+                        <div class="option"><input type="radio" name="q20" value="c"> c. Penyederhanaan jenis perangkat</div>
+                        <div class="option"><input type="radio" name="q20" value="d"> d. Pemusatan perangkat pada satu merek</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation20')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation20">
+                        <strong>Jawaban: b. Peningkatan yang cepat dan menyebar luasnya jumlah perangkat yang mampu terhubung ke jaringan</strong><br>
+                        Penjelasan: Proliferasi perangkat mengacu pada pertumbuhan eksponensial dalam jumlah dan jenis perangkat yang dapat terhubung ke jaringan, seperti IoT devices.
+                    </div>
+                </div>
+                
+                <!-- Soal 21-30 -->
+                <div class="question">
+                    <div class="question-number">21</div>
+                    <div class="question-text">Salah satu tujuan mempelajari jaringan dalam chapter ini adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q21" value="a"> a. Merancang prosesor komputer yang lebih cepat</div>
+                        <div class="option"><input type="radio" name="q21" value="b"> b. Menginstal dan menggunakan klien IRC serta server Wiki</div>
+                        <div class="option"><input type="radio" name="q21" value="c"> c. Memprogram aplikasi mobile terbaru</div>
+                        <div class="option"><input type="radio" name="q21" value="d"> d. Membuat sistem operasi yang aman</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation21')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation21">
+                        <strong>Jawaban: b. Menginstal dan menggunakan klien IRC serta server Wiki</strong><br>
+                        Penjelasan: Tujuan pembelajaran jaringan termasuk memahami dan menggunakan berbagai aplikasi jaringan seperti IRC dan Wiki untuk komunikasi dan kolaborasi.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">22</div>
+                    <div class="question-text">Manakah dari berikut ini yang merupakan penjelasan yang tepat untuk Instant Messaging (IM) berdasarkan materi?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q22" value="a"> a. Situs web yang berisi file audio untuk diunduh</div>
+                        <div class="option"><input type="radio" name="q22" value="b"> b. Komunikasi real-time antara dua orang atau lebih berdasarkan teks yang diketik</div>
+                        <div class="option"><input type="radio" name="q22" value="c"> c. Halaman web yang dibuat oleh individu untuk berbagi opini</div>
+                        <div class="option"><input type="radio" name="q22" value="d"> d. Alat untuk bekerja sama pada dokumen bersama</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation22')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation22">
+                        <strong>Jawaban: b. Komunikasi real-time antara dua orang atau lebih berdasarkan teks yang diketik</strong><br>
+                        Penjelasan: Instant Messaging (IM) adalah bentuk komunikasi teks real-time antara dua atau lebih pengguna melalui aplikasi khusus.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">23</div>
+                    <div class="question-text">Menurut materi, salah satu cara jaringan informasi mendukung proses belajar mengajar adalah dengan...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q23" value="a"> a. Menggantikan peran guru sepenuhnya</div>
+                        <div class="option"><input type="radio" name="q23" value="b"> b. Membagikan dan berkolaborasi</div>
+                        <div class="option"><input type="radio" name="q23" value="c"> c. Menyediakan buku teks digital gratis</div>
+                        <div class="option"><input type="radio" name="q23" value="d"> d. Mengadakan ujian online secara eksklusif</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation23')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation23">
+                        <strong>Jawaban: b. Membagikan dan berkolaborasi</strong><br>
+                        Penjelasan: Jaringan informasi mendukung pendidikan dengan memfasilitasi berbagi sumber daya dan kolaborasi antara siswa dan pengajar.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">24</div>
+                    <div class="question-text">Langkah pertama dalam komunikasi dasar yang dijelaskan adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q24" value="a"> a. Mengulang informasi penting</div>
+                        <div class="option"><input type="radio" name="q24" value="b"> b. Memilih mode komunikasi yang tepat</div>
+                        <div class="option"><input type="radio" name="q24" value="c"> c. Menetapkan aturan atau kesepakatan terlebih dahulu</div>
+                        <div class="option"><input type="radio" name="q24" value="d"> d. Mengirimkan pesan secepat mungkin</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation24')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation24">
+                        <strong>Jawaban: c. Menetapkan aturan atau kesepakatan terlebih dahulu</strong><br>
+                        Penjelasan: Langkah pertama dalam komunikasi yang efektif adalah menetapkan aturan atau protokol yang disepakati bersama oleh pengirim dan penerima.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">25</div>
+                    <div class="question-text">Empat elemen yang membentuk sebuah jaringan data adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q25" value="a"> a. Server, Client, Media, dan Keamanan</div>
+                        <div class="option"><input type="radio" name="q25" value="b"> b. PC, Laptop, Smartphone, dan Tablet</div>
+                        <div class="option"><input type="radio" name="q25" value="c"> c. Perangkat, Media, Pesan, dan Aturan</div>
+                        <div class="option"><input type="radio" name="q25" value="d"> d. Pengirim, Penerima, Protokol, dan Jaringan</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation25')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation25">
+                        <strong>Jawaban: c. Perangkat, Media, Pesan, dan Aturan</strong><br>
+                        Penjelasan: Empat elemen fundamental jaringan data adalah perangkat (hardware), media (saluran komunikasi), pesan (data), dan aturan (protokol).
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">26</div>
+                    <div class="question-text">Jaringan yang dapat membawa suara, video, dan data di atas infrastruktur yang sama disebut...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q26" value="a"> a. Jaringan Terdedikasi</div>
+                        <div class="option"><input type="radio" name="q26" value="b"> b. Jaringan Nirkabel</div>
+                        <div class="option"><input type="radio" name="q26" value="c"> c. Jaringan Terkonvergensi (Converged Network)</div>
+                        <div class="option"><input type="radio" name="q26" value="d"> d. Jaringan Packet-Switched</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation26')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation26">
+                        <strong>Jawaban: c. Jaringan Terkonvergensi (Converged Network)</strong><br>
+                        Penjelasan: Jaringan terkonvergensi memungkinkan berbagai jenis komunikasi (suara, video, data) berjalan di atas infrastruktur jaringan yang sama.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">27</div>
+                    <div class="question-text">Empat karakteristik yang harus ditangani oleh desain arsitektur jaringan adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q27" value="a"> a. Kecepatan, Biaya, Keandalan, Kemudahan</div>
+                        <div class="option"><input type="radio" name="q27" value="b"> b. Toleransi Kesalahan, Skalabilitas, Kualitas Layanan, Keamanan</div>
+                        <div class="option"><input type="radio" name="q27" value="c"> c. Protokol, Perangkat, Media, Topologi</div>
+                        <div class="option"><input type="radio" name="q27" value="d"> d. Upload, Download, Streaming, Browsing</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation27')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation27">
+                        <strong>Jawaban: b. Toleransi Kesalahan, Skalabilitas, Kualitas Layanan, Keamanan</strong><br>
+                        Penjelasan: Empat karakteristik kritis dalam desain arsitektur jaringan adalah fault tolerance, scalability, quality of service, dan security.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">28</div>
+                    <div class="question-text">Teknologi switching yang membantu meningkatkan ketahanan dan fault tolerance arsitektur Internet adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q28" value="a"> a. Circuit Switching</div>
+                        <div class="option"><input type="radio" name="q28" value="b"> b. Packet Switching</div>
+                        <div class="option"><input type="radio" name="q28" value="c"> c. Message Switching</div>
+                        <div class="option"><input type="radio" name="q28" value="d"> d. Line Switching</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation28')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation28">
+                        <strong>Jawaban: b. Packet Switching</strong><br>
+                        Penjelasan: Packet switching meningkatkan ketahanan jaringan dengan memungkinkan paket data mengambil rute alternatif jika terjadi kegagalan pada satu rute.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">29</div>
+                    <div class="question-text">Manakah dari berikut ini yang BUKAN merupakan karakteristik Internet yang membantunya berskala memenuhi permintaan pengguna?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q29" value="a"> a. Hierarkis</div>
+                        <div class="option"><input type="radio" name="q29" value="b"> b. Standar yang umum</div>
+                        <div class="option"><input type="radio" name="q29" value="c"> c. Protokol yang umum</div>
+                        <div class="option"><input type="radio" name="q29" value="d"> d. Biaya akses yang murah</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation29')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation29">
+                        <strong>Jawaban: d. Biaya akses yang murah</strong><br>
+                        Penjelasan: Biaya akses yang murah bukan karakteristik teknis Internet yang membantu skalabilitas, melainkan faktor ekonomi.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">30</div>
+                    <div class="question-text">Mekanisme Quality of Service (QoS) diperlukan untuk memastikan kualitas untuk...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q30" value="a"> a. Semua jenis traffic secara merata</div>
+                        <div class="option"><input type="radio" name="q30" value="b"> b. Hanya aplikasi web browsing</div>
+                        <div class="option"><input type="radio" name="q30" value="c"> c. Aplikasi-aplikasi yang membutuhkannya (seperti video call)</div>
+                        <div class="option"><input type="radio" name="q30" value="d"> d. Pengguna yang membayar lebih</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation30')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation30">
+                        <strong>Jawaban: c. Aplikasi-aplikasi yang membutuhkannya (seperti video call)</strong><br>
+                        Penjelasan: QoS memprioritaskan aplikasi yang sensitif terhadap latency dan bandwidth seperti video call, VoIP, dan streaming video.
+                    </div>
+                </div>
+                
+                <!-- Soal 31-40 -->
+                <div class="question">
+                    <div class="question-number">31</div>
+                    <div class="question-text">Tindakan dasar untuk menjamin kerahasiaan (confidentiality) data dalam jaringan adalah dengan menggunakan...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q31" value="a"> a. Autentikasi pengguna dan enkripsi data</div>
+                        <div class="option"><input type="radio" name="q31" value="b"> b. Tanda tangan digital dan algoritma hash</div>
+                        <div class="option"><input type="radio" name="q31" value="c"> c. Firewall dan arsitektur jaringan redundan</div>
+                        <div class="option"><input type="radio" name="q31" value="d"> d. Switch dan router yang canggih</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation31')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation31">
+                        <strong>Jawaban: a. Autentikasi pengguna dan enkripsi data</strong><br>
+                        Penjelasan: Kerahasiaan data dijaga dengan autentikasi (memastikan identitas pengguna) dan enkripsi (menyembunyikan isi data dari pihak yang tidak berwenang).
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">32</div>
+                    <div class="question-text">Tanda tangan digital (Digital Signatures) digunakan terutama untuk menjaga...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q32" value="a"> a. Ketersediaan (Availability)</div>
+                        <div class="option"><input type="radio" name="q32" value="b"> b. Kerahasiaan (Confidentiality)</div>
+                        <div class="option"><input type="radio" name="q32" value="c"> c. Integritas Komunikasi (Communication Integrity)</div>
+                        <div class="option"><input type="radio" name="q32" value="d"> d. Kecepatan Komunikasi (Communication Speed)</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation32')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation32">
+                        <strong>Jawaban: c. Integritas Komunikasi (Communication Integrity)</strong><br>
+                        Penjelasan: Tanda tangan digital memverifikasi bahwa pesan tidak diubah selama transmisi dan memastikan identitas pengirim, sehingga menjaga integritas komunikasi.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">33</div>
+                    <div class="question-text">Apa tiga elemen yang sama dalam semua bentuk komunikasi manusia dan perangkat?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q33" value="a"> a. Sumber, Media, Protokol</div>
+                        <div class="option"><input type="radio" name="q33" value="b"> b. Sumber, Tujuan, Saluran</div>
+                        <div class="option"><input type="radio" name="q33" value="c"> c. Pengirim, Penerima, Data</div>
+                        <div class="option"><input type="radio" name="q33" value="d"> d. Host, Klien, Server</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation33')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation33">
+                        <strong>Jawaban: b. Sumber, Tujuan, Saluran</strong><br>
+                        Penjelasan: Semua bentuk komunikasi, baik manusia maupun perangkat, memiliki tiga elemen dasar: sumber (pengirim), tujuan (penerima), dan saluran (media).
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">34</div>
+                    <div class="question-text">Mengapa segmentasi pesan dalam jaringan dianggap lebih baik daripada mengirimkan sebagai satu aliran data yang berkelanjutan?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q34" value="a"> a. Karena lebih mudah diterapkan</div>
+                        <div class="option"><input type="radio" name="q34" value="b"> b. Karena memungkinkan multiplexing dan meningkatkan keandalan</div>
+                        <div class="option"><input type="radio" name="q34" value="c"> c. Karena mengurangi kebutuhan akan perangkat jaringan</div>
+                        <div class="option"><input type="radio" name="q34" value="d"> d. Karena menghilangkan kebutuhan akan protokol</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation34')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation34">
+                        <strong>Jawaban: b. Karena memungkinkan multiplexing dan meningkatkan keandalan</strong><br>
+                        Penjelasan: Segmentasi memungkinkan multiplexing (berbagi jalur komunikasi) dan meningkatkan keandalan karena hanya segmen yang rusak yang perlu dikirim ulang.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">35</div>
+                    <div class="question-text">Perangkat mana dari berikut ini yang merupakan contoh dari End Device?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q35" value="a"> a. Router</div>
+                        <div class="option"><input type="radio" name="q35" value="b"> b. Switch</div>
+                        <div class="option"><input type="radio" name="q35" value="c"> c. Server Email</div>
+                        <div class="option"><input type="radio" name="q35" value="d"> d. Hub</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation35')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation35">
+                        <strong>Jawaban: c. Server Email</strong><br>
+                        Penjelasan: End device adalah perangkat yang menjadi sumber atau tujuan data dalam jaringan, seperti server, komputer, atau smartphone.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">36</div>
+                    <div class="question-text">Fungsi utama dari perangkat perantara (seperti router) dalam jaringan adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q36" value="a"> a. Menyediakan antarmuka pengguna</div>
+                        <div class="option"><input type="radio" name="q36" value="b"> b. Menyediakan konektivitas dan mengelola aliran data antar jaringan atau segmen jaringan</div>
+                        <div class="option"><input type="radio" name="q36" value="c"> c. Hanya memperkuat sinyal data</div>
+                        <div class="option"><input type="radio" name="q36" value="d"> d. Hanya menyediakan daya untuk perangkat ujung</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation36')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation36">
+                        <strong>Jawaban: b. Menyediakan konektivitas dan mengelola aliran data antar jaringan atau segmen jaringan</strong><br>
+                        Penjelasan: Perangkat perantara seperti router dan switch menghubungkan berbagai segmen jaringan dan mengelola aliran data di antara mereka.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">37</div>
+                    <div class="question-text">Apa pertimbangan utama ketika memilih media jaringan?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q37" value="a"> a. Warna kabel dan estetika</div>
+                        <div class="option"><input type="radio" name="q37" value="b"> b. Hanya biaya media itu sendiri</div>
+                        <div class="option"><input type="radio" name="q37" value="c"> c. Jarak, lingkungan, bandwidth, dan biaya total</div>
+                        <div class="option"><input type="radio" name="q37" value="d"> d. Kecepatan maksimum teoritis tanpa mempertimbangkan lingkungan</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation37')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation37">
+                        <strong>Jawaban: c. Jarak, lingkungan, bandwidth, dan biaya total</strong><br>
+                        Penjelasan: Pemilihan media jaringan mempertimbangkan jarak yang perlu dijangkau, kondisi lingkungan, bandwidth yang dibutuhkan, dan biaya total kepemilikan.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">38</div>
+                    <div class="question-text">Apa perbedaan mendasar antara LAN dan WAN?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q38" value="a"> a. LAN menggunakan kabel, WAN selalu nirkabel</div>
+                        <div class="option"><input type="radio" name="q38" value="b"> b. LAN menjangkau area geografis yang terbatas, sedangkan WAN menghubungkan LAN di lokasi yang terpisah secara geografis</div>
+                        <div class="option"><input type="radio" name="q38" value="c"> c. LAN lebih lambat dari WAN</div>
+                        <div class="option"><input type="radio" name="q38" value="d"> d. LAN hanya untuk bisnis, WAN hanya untuk individu</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation38')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation38">
+                        <strong>Jawaban: b. LAN menjangkau area geografis yang terbatas, sedangkan WAN menghubungkan LAN di lokasi yang terpisah secara geografis</strong><br>
+                        Penjelasan: LAN (Local Area Network) mencakup area terbatas seperti gedung atau kampus, sedangkan WAN (Wide Area Network) menghubungkan LAN di lokasi yang berbeda.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">39</div>
+                    <div class="question-text">Port fisik pada perangkat jaringan berfungsi sebagai...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q39" value="a"> a. Tempat untuk memasang sistem operasi</div>
+                        <div class="option"><input type="radio" name="q39" value="b"> b. Konektor atau outlet tempat media terhubung ke host atau perangkat jaringan lainnya</div>
+                        <div class="option"><input type="radio" name="q39" value="c"> c. Antarmuka perangkat lunak untuk konfigurasi</div>
+                        <div class="option"><input type="radio" name="q39" value="d"> d. Unit pemrosesan pusat untuk router</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation39')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation39">
+                        <strong>Jawaban: b. Konektor atau outlet tempat media terhubung ke host atau perangkat jaringan lainnya</strong><br>
+                        Penjelasan: Port fisik adalah antarmuka fisik tempat kabel atau media nirkabel terhubung ke perangkat jaringan.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">40</div>
+                    <div class="question-text">Protokol dalam komunikasi jaringan terutama mengatur...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q40" value="a"> a. Harga perangkat keras jaringan</div>
+                        <div class="option"><input type="radio" name="q40" value="b"> b. Aturan untuk format pesan, pertukaran pesan error, dan sesi transfer data</div>
+                        <div class="option"><input type="radio" name="q40" value="c"> c. Desain fisik kabel jaringan</div>
+                        <div class="option"><input type="radio" name="q40" value="d"> d. Pemilihan merek perangkat lunak yang harus digunakan</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation40')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation40">
+                        <strong>Jawaban: b. Aturan untuk format pesan, pertukaran pesan error, dan sesi transfer data</strong><br>
+                        Penjelasan: Protokol adalah seperangkat aturan yang mengatur format pesan, penanganan error, dan cara perangkat berkomunikasi dalam jaringan.
+                    </div>
+                </div>
+                
+                <!-- Soal 41-47 -->
+                <div class="question">
+                    <div class="question-number">41</div>
+                    <div class="question-text">Manakah dari berikut ini yang BUKAN manfaat menggunakan model jaringan berlapis?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q41" value="a"> a. Mencegah perubahan di satu lapisan mempengaruhi lapisan lainnya</div>
+                        <div class="option"><input type="radio" name="q41" value="b"> b. Menyediakan bahasa umum untuk mendeskripsikan fungsi jaringan</div>
+                        <div class="option"><input type="radio" name="q41" value="c"> c. Mengunci pengguna ke satu vendor perangkat keras</div>
+                        <div class="option"><input type="radio" name="q41" value="d"> d. Memisahkan fungsi untuk pemahaman yang lebih mudah</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation41')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation41">
+                        <strong>Jawaban: c. Mengunci pengguna ke satu vendor perangkat keras</strong><br>
+                        Penjelasan: Model berlapis justru meningkatkan interoperabilitas antar vendor, bukan mengunci pengguna ke satu vendor tertentu.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">42</div>
+                    <div class="question-text">Model referensi OSI dikembangkan oleh...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q42" value="a"> a. IETF</div>
+                        <div class="option"><input type="radio" name="q42" value="b"> b. IEEE</div>
+                        <div class="option"><input type="radio" name="q42" value="c"> c. ISO</div>
+                        <div class="option"><input type="radio" name="q42" value="d"> d. TCP/IP Consortium</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation42')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation42">
+                        <strong>Jawaban: c. ISO</strong><br>
+                        Penjelasan: Model referensi OSI (Open Systems Interconnection) dikembangkan oleh International Organization for Standardization (ISO).
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">43</div>
+                    <div class="question-text">Proses menambahkan header dan trailer data saat ia turun melalui lapisan model OSI disebut...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q43" value="a"> a. Dekapsulasi</div>
+                        <div class="option"><input type="radio" name="q43" value="b"> b. Segmentasi</div>
+                        <div class="option"><input type="radio" name="q43" value="c"> c. Enkapsulasi</div>
+                        <div class="option"><input type="radio" name="q43" value="d"> d. Modulasi</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation43')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation43">
+                        <strong>Jawaban: c. Enkapsulasi</strong><br>
+                        Penjelasan: Enkapsulasi adalah proses menambahkan informasi header dan trailer saat data melewati lapisan model OSI dari atas ke bawah.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">44</div>
+                    <div class="question-text">Alamat MAC, yang unik untuk setiap NIC, digunakan pada lapisan model OSI mana?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q44" value="a"> a. Lapisan Jaringan (Network)</div>
+                        <div class="option"><input type="radio" name="q44" value="b"> b. Lapisan Transport (Transport)</div>
+                        <div class="option"><input type="radio" name="q44" value="c"> c. Lapisan Data Link (Data Link)</div>
+                        <div class="option"><input type="radio" name="q44" value="d"> d. Lapisan Fisik (Physical)</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation44')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation44">
+                        <strong>Jawaban: c. Lapisan Data Link (Data Link)</strong><br>
+                        Penjelasan: Alamat MAC (Media Access Control) digunakan pada lapisan Data Link (lapisan 2) model OSI untuk mengidentifikasi perangkat secara fisik.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">45</div>
+                    <div class="question-text">Alamat manakah yang digunakan oleh router untuk membuat keputusan perutean dan mengidentifikasi baik jaringan maupun host tujuan?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q45" value="a"> a. Alamat MAC</div>
+                        <div class="option"><input type="radio" name="q45" value="b"> b. Alamat Port</div>
+                        <div class="option"><input type="radio" name="q45" value="c"> c. Alamat IP (Lapisan 3)</div>
+                        <div class="option"><input type="radio" name="q45" value="d"> d. Alamat Email</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation45')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation45">
+                        <strong>Jawaban: c. Alamat IP (Lapisan 3)</strong><br>
+                        Penjelasan: Router menggunakan alamat IP (lapisan 3) untuk membuat keputusan perutean dan mengidentifikasi jaringan serta host tujuan.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">46</div>
+                    <div class="question-text">Alamat pada Lapisan 4 (Transport) terutama mengidentifikasi...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q46" value="a"> a. Perangkat fisik tertentu di jaringan</div>
+                        <div class="option"><input type="radio" name="q46" value="b"> b. Jaringan tujuan</div>
+                        <div class="option"><input type="radio" name="q46" value="c"> c. Proses atau layanan aplikasi spesifik pada host tujuan</div>
+                        <div class="option"><input type="radio" name="q46" value="d"> d. Jenis media yang digunakan</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation46')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation46">
+                        <strong>Jawaban: c. Proses atau layanan aplikasi spesifik pada host tujuan</strong><br>
+                        Penjelasan: Alamat pada lapisan Transport (port number) mengidentifikasi proses atau layanan aplikasi tertentu pada host tujuan.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-number">47</div>
+                    <div class="question-text">Urutan PDU yang benar saat data dienkapsulasi (dari lapisan atas ke bawah) biasanya adalah...</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="q47" value="a"> a. Frame -> Packet -> Segment -> Data</div>
+                        <div class="option"><input type="radio" name="q47" value="b"> b. Data -> Segment -> Packet -> Frame</div>
+                        <div class="option"><input type="radio" name="q47" value="c"> c. Data -> Packet -> Segment -> Frame</div>
+                        <div class="option"><input type="radio" name="q47" value="d"> d. Segment -> Data -> Packet -> Frame</div>
+                    </div>
+                    <button type="button" class="show-explanation" onclick="toggleExplanation('explanation47')">Tampilkan Penjelasan</button>
+                    <div class="explanation" id="explanation47">
+                        <strong>Jawaban: b. Data -> Segment -> Packet -> Frame</strong><br>
+                        Penjelasan: Urutan enkapsulasi yang benar adalah: Data (Application) -> Segment (Transport) -> Packet (Network) -> Frame (Data Link).
+                    </div>
+                </div>
+                
+            </form>
+            
+            <div class="results" id="results">
+                <div class="score">Skor Anda: <span class="score-value" id="score-value">0</span> dari 47</div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                <div id="detailed-results" class="detailed-results"></div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn" onclick="prevQuestion()" disabled>Soal Sebelumnya</button>
+            <button class="submit-btn" onclick="checkAnswers()">Periksa Jawaban</button>
+            <button class="nav-btn" id="next-btn" onclick="nextQuestion()">Soal Berikutnya</button>
+        </div>
+    </div>
+
+    <script>
+        // Jawaban yang benar untuk setiap soal
+        const correctAnswers = {
+            q1: 'c', q2: 'c', q3: 'c', q4: 'b', q5: 'c',
+            q6: 'b', q7: 'b', q8: 'c', q9: 'b', q10: 'c',
+            q11: 'c', q12: 'b', q13: 'b', q14: 'a', q15: 'c',
+            q16: 'c', q17: 'c', q18: 'c', q19: 'b', q20: 'b',
+            q21: 'b', q22: 'b', q23: 'b', q24: 'c', q25: 'c',
+            q26: 'c', q27: 'b', q28: 'b', q29: 'd', q30: 'c',
+            q31: 'a', q32: 'c', q33: 'b', q34: 'b', q35: 'c',
+            q36: 'b', q37: 'c', q38: 'b', q39: 'b', q40: 'b',
+            q41: 'c', q42: 'c', q43: 'c', q44: 'c', q45: 'c',
+            q46: 'c', q47: 'b'
+        };
+        
+        let currentQuestion = 1;
+        const totalQuestions = Object.keys(correctAnswers).length;
+        
+        // Fungsi untuk menampilkan/menyembunyikan penjelasan
+        function toggleExplanation(id) {
+            const explanation = document.getElementById(id);
+            if (explanation.style.display === 'block') {
+                explanation.style.display = 'none';
+            } else {
+                explanation.style.display = 'block';
+            }
+        }
+        
+        // Fungsi untuk navigasi soal
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.querySelector(`.question:nth-child(${currentQuestion})`).style.display = 'none';
+                currentQuestion++;
+                document.querySelector(`.question:nth-child(${currentQuestion})`).style.display = 'block';
+                updateNavigationButtons();
+            }
+        }
+        
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                document.querySelector(`.question:nth-child(${currentQuestion})`).style.display = 'none';
+                currentQuestion--;
+                document.querySelector(`.question:nth-child(${currentQuestion})`).style.display = 'block';
+                updateNavigationButtons();
+            }
+        }
+        
+        function updateNavigationButtons() {
+            document.getElementById('prev-btn').disabled = currentQuestion === 1;
+            document.getElementById('next-btn').disabled = currentQuestion === totalQuestions;
+        }
+        
+        // Fungsi untuk memeriksa jawaban
+        function checkAnswers() {
+            let score = 0;
+            let totalQuestions = Object.keys(correctAnswers).length;
+            let detailedResults = '';
+            
+            // Periksa setiap soal
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = 'q' + i;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[questionName]) {
+                        score++;
+                        detailedResults += `<div class="result-item correct">Soal ${i}: Benar</div>`;
+                    } else {
+                        detailedResults += `<div class="result-item incorrect">Soal ${i}: Salah. Jawaban yang benar adalah ${correctAnswers[questionName].toUpperCase()}</div>`;
+                    }
+                } else {
+                    detailedResults += `<div class="result-item incorrect">Soal ${i}: Tidak dijawab. Jawaban yang benar adalah ${correctAnswers[questionName].toUpperCase()}</div>`;
+                }
+            }
+            
+            // Tampilkan hasil
+            const resultsDiv = document.getElementById('results');
+            const scoreValue = document.getElementById('score-value');
+            const progressBar = document.getElementById('progress-bar');
+            const detailedResultsDiv = document.getElementById('detailed-results');
+            
+            scoreValue.textContent = score;
+            progressBar.style.width = `${(score / totalQuestions) * 100}%`;
+            detailedResultsDiv.innerHTML = detailedResults;
+            resultsDiv.style.display = 'block';
+            
+            // Scroll ke hasil
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Inisialisasi tampilan soal pertama
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sembunyikan semua soal kecuali yang pertama
+            const questions = document.querySelectorAll('.question');
+            for (let i = 1; i < questions.length; i++) {
+                questions[i].style.display = 'none';
+            }
+            updateNavigationButtons();
+        });
+    </script>
+</body>
+</html>
